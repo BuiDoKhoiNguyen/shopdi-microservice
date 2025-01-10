@@ -1,0 +1,164 @@
+version: "3.9"
+
+# BUSINESS SERVICES - Cart, Order, Payment, etc.
+# Usage: 
+#   1. Start core first: docker-compose -f docker-compose.core.yml up -d
+#   2. Then start business: docker-compose -f docker-compose.business.yml up -d
+# RAM Required: +4-6GB (in addition to core)
+
+services:
+  # ============================================
+  # BUSINESS LOGIC SERVICES
+  # ============================================
+  cart:
+    build:
+      context: ./cart
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8089:8089"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8089
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/cart
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - yas-network
+
+  order:
+    build:
+      context: ./order
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8092:8092"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8092
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/order
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - yas-network
+
+  payment:
+    build:
+      context: ./payment
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8093:8093"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8093
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/payment
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - yas-network
+
+  payment-paypal:
+    build:
+      context: ./payment-paypal
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8094:8094"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8094
+    networks:
+      - yas-network
+
+  promotion:
+    build:
+      context: ./promotion
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8095:8095"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8095
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/promotion
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - yas-network
+
+  tax:
+    build:
+      context: ./tax
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8096:8096"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8096
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/tax
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - yas-network
+
+  delivery:
+    build:
+      context: ./delivery
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8097:8097"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8097
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/delivery
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - yas-network
+
+  rating:
+    build:
+      context: ./rating
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8098:8098"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8098
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/rating
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - yas-network
+
+  webhook:
+    build:
+      context: ./webhook
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8099:8099"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8099
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/webhook
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - yas-network
+
+networks:
+  yas-network:
+    external: true

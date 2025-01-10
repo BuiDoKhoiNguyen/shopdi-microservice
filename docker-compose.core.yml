@@ -1,0 +1,200 @@
+version: "3.9"
+
+# CORE SERVICES - Infrastructure + Essential Backend Services
+# Usage: docker-compose -f docker-compose.core.yml up -d
+# RAM Required: ~4-6GB
+
+services:
+  # ============================================
+  # INFRASTRUCTURE
+  # ============================================
+  postgres:
+    image: debezium/postgres:16-alpine
+    build: ./docker/postgres
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/postgres/postgresql.conf.sample:/usr/share/postgresql/postgresql.conf.sample
+      - ./postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
+      - postgres:/var/lib/postgresql/data
+    command: postgres -c 'max_connections=500'
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    networks:
+      - yas-network
+
+  identity:
+    image: quay.io/keycloak/keycloak:26.0.2
+    command: 'start-dev --import-realm'
+    ports:
+      - "8080:80"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: admin
+      KC_HTTP_PORT: 80
+    volumes:
+      - ./identity/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./identity/themes/yas/theme:/opt/keycloak/themes
+    depends_on:
+      - postgres
+    networks:
+      - yas-network
+
+  # ============================================
+  # CORE BACKEND SERVICES
+  # ============================================
+  product:
+    build:
+      context: ./product
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8087:8087"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8087
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/product
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - identity
+    networks:
+      - yas-network
+
+  customer:
+    build:
+      context: ./customer
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8088:8088"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8088
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/customer
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - identity
+    networks:
+      - yas-network
+
+  location:
+    build:
+      context: ./location
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8084
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/location
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - identity
+    networks:
+      - yas-network
+
+  inventory:
+    build:
+      context: ./inventory
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8091:8091"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8091
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - identity
+      - product
+    networks:
+      - yas-network
+
+  media:
+    build:
+      context: ./media
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8085
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/media
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - identity
+    networks:
+      - yas-network
+
+  # ============================================
+  # BFF LAYER (API Gateway)
+  # ============================================
+  backoffice-bff:
+    build:
+      context: ./backoffice-bff
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8086
+    depends_on:
+      - identity
+      - product
+      - customer
+      - location
+      - inventory
+      - media
+    networks:
+      - yas-network
+
+  storefront-bff:
+    build:
+      context: ./storefront-bff
+      dockerfile: Dockerfile
+    entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8090
+    depends_on:
+      - identity
+      - product
+      - customer
+      - location
+      - inventory
+    networks:
+      - yas-network
+
+networks:
+  yas-network:
+    driver: bridge
+
+volumes:
+  postgres:
