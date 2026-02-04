@@ -32,7 +32,7 @@ securityContext: {}
 # runAsUser: 1000
 
 pgadmin:
-  user: admin@yas.com
+  user: admin@shopdi.com
   password: admin
 persistence:
   enabled: true
@@ -41,7 +41,7 @@ persistence:
 service:
   type: ClusterIP
   port: 80
-hostname: &hostname pgadmin.yas.local.com
+hostname: &hostname pgadmin.shopdi.local.com
 ingress:
   enabled: true
   className: "nginx"

@@ -75,13 +75,13 @@ commit_with_date "2025-10-01 14:45:00" "Add deployment configurations" "deployme
 commit_with_date "2025-10-10 11:20:00" "Add initialization scripts" "postgres_init.sql"
 
 # Tháng 11/2025 - Scripts and automation
-commit_with_date "2025-11-01 10:00:00" "Add startup scripts" "start-yas.sh start-source-connectors.sh"
+commit_with_date "2025-11-01 10:00:00" "Add startup scripts" "start-shopdi.sh start-source-connectors.sh"
 commit_with_date "2025-11-10 15:30:00" "Add workflow scripts" "workflows.sh create-service-commits.sh"
 commit_with_date "2025-11-15 13:15:00" "Add automation UI" "automation-ui/"
 
 # Tháng 12/2025 - Documentation and configs
-commit_with_date "2025-12-01 09:30:00" "Add yaslocal configuration" "yaslocal.yaml"
-commit_with_date "2025-12-10 14:00:00" "Add architecture diagram" "yas-architecture-local.png"
+commit_with_date "2025-12-01 09:30:00" "Add shopdilocal configuration" "shopdilocal.yaml"
+commit_with_date "2025-12-10 14:00:00" "Add architecture diagram" "shopdi-architecture-local.png"
 commit_with_date "2025-12-15 11:45:00" "Add scripts folder" "scripts/"
 
 # Tháng 1/2026 - CI/CD

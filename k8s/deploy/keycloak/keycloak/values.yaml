@@ -1,8 +1,8 @@
-hostname: identity.yas.local.com
-backofficeRedirectUrl: http://backoffice.yas.local.com
-storefrontRedirectUrl: http://storefront.yas.local.com
+hostname: identity.shopdi.local.com
+backofficeRedirectUrl: http://backoffice.shopdi.local.com
+storefrontRedirectUrl: http://storefront.shopdi.local.com
 postgresql:
-  username: yasadminuser
+  username: shopdiadminuser
   password: admin
 
 bootstrapAdmin:

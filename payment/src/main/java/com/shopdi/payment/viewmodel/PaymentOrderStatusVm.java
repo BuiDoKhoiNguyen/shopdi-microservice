@@ -1,0 +1,11 @@
+package com.shopdi.payment.viewmodel;
+
+import lombok.Builder;
+
+@Builder
+public record PaymentOrderStatusVm(
+                Long orderId,
+                String orderStatus,
+                Long paymentId,
+                String paymentStatus) {
+}

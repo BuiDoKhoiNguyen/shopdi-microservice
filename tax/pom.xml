@@ -3,19 +3,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yas</groupId>
-        <artifactId>yas</artifactId>
+        <groupId>com.shopdi</groupId>
+        <artifactId>shopdi</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>tax</artifactId>
     <version>${revision}</version>
     <name>tax</name>
-    <description>YAS Tax Service</description>
+    <description>SHOPDI Tax Service</description>
     <properties>
         <sonar.organization>nashtech-garage</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>nashtech-garage_yas-tax</sonar.projectKey>
+        <sonar.projectKey>nashtech-garage_shopdi-tax</sonar.projectKey>
     </properties>
     <dependencies>
         <dependency>
@@ -53,12 +53,12 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.yas</groupId>
+            <groupId>com.shopdi</groupId>
             <artifactId>common-library</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.yas</groupId>
+            <groupId>com.shopdi</groupId>
             <artifactId>common-library</artifactId>
             <version>${revision}</version>
             <classifier>tests</classifier>

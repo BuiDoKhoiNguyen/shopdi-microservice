@@ -68,7 +68,7 @@ const Footer = () => {
 
             <div className="p-t-27">
               <Link
-                href="https://github.com/nashtech-garage/yas/"
+                href="https://github.com/nashtech-garage/shopdi/"
                 target={'_blank'}
                 className="fs-18 cl7 hov-cl trans-04 m-r-16"
               >
@@ -76,7 +76,7 @@ const Footer = () => {
               </Link>
 
               <Link
-                href="https://github.com/nashtech-garage/yas/"
+                href="https://github.com/nashtech-garage/shopdi/"
                 target={'_blank'}
                 className="fs-18 cl7 hov-cl trans-04 m-r-16"
               >
@@ -84,7 +84,7 @@ const Footer = () => {
               </Link>
 
               <Link
-                href="https://github.com/nashtech-garage/yas/"
+                href="https://github.com/nashtech-garage/shopdi/"
                 target={'_blank'}
                 className="fs-18 cl7 hov-cl trans-04 m-r-16"
               >
@@ -102,7 +102,7 @@ const Footer = () => {
                   className="input cl7"
                   type="text"
                   name="email"
-                  placeholder="yas-sample@yas.com"
+                  placeholder="shopdi-sample@shopdi.com"
                 />
                 <div className="focus-input trans-04"></div>
               </div>
@@ -110,7 +110,7 @@ const Footer = () => {
               <div className="p-t-18">
                 <button className="cl0 bg1 bor-radius hov-btn p-lr-15 trans-04">
                   <Link
-                    href="https://github.com/nashtech-garage/yas/"
+                    href="https://github.com/nashtech-garage/shopdi/"
                     target={'_blank'}
                     className="text-dark"
                   >

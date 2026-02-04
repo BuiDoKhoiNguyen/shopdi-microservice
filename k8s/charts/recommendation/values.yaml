@@ -1,6 +1,6 @@
 backend:
   image:
-    repository: ghcr.io/nashtech-garage/yas-recommendation
+    repository: ghcr.io/nashtech-garage/shopdi-recommendation
     tag: latest
 
   nameOverride: recommendation
@@ -10,13 +10,13 @@ backend:
     enabled: false
   extraEnvFroms:
     - secretRef:
-        name: yas-openai-api-key-secret
+        name: shopdi-openai-api-key-secret
   extraVolumes:
     - name: recommendation-application
       configMap:
         name: recommendation-application-configmap
   extraVolumeMounts:
     - name: recommendation-application
-      mountPath: /opt/yas/recommendation
+      mountPath: /opt/shopdi/recommendation
   extraApplicationConfigPaths:
-    - /opt/yas/recommendation/recommendation-application.yaml
+    - /opt/shopdi/recommendation/recommendation-application.yaml

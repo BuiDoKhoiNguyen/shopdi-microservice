@@ -1,13 +1,13 @@
 backend:
   image:
-    repository: ghcr.io/nashtech-garage/yas-{{service}}
+    repository: ghcr.io/nashtech-garage/shopdi-{{service}}
     tag: latest
 
-  nameOverride: {{service}}
-  fullnameOverride: {{service}}
-  databaseName: {{service}}
+  nameOverride: { { service } }
+  fullnameOverride: { { service } }
+  databaseName: { { service } }
 
   ingress:
     enabled: true
-    host: api.yas.local.com
+    host: api.shopdi.local.com
     path: /{{service}}

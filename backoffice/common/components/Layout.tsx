@@ -87,7 +87,7 @@ export default function Layout({ children }: Props) {
           </main>
           <footer className={styles.footer}>
             <Link
-              href="https://github.com/nashtech-garage/yas"
+              href="https://github.com/nashtech-garage/shopdi"
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -1,6 +1,7 @@
-# 🚀 Quick Start Guide - YAS E-commerce Platform
+# 🚀 Quick Start Guide - SHOPDI E-commerce Platform
 
 ## 📋 Prerequisites
+
 - Docker & Docker Compose
 - 8GB+ RAM available
 - Ports available: 80, 5432, 8080-8102, 3000-3001, 9200
@@ -8,6 +9,7 @@
 ---
 
 ## 🎯 Option 1: Core Only (Minimal Setup)
+
 **RAM Required:** ~4-6GB  
 **Services:** Infrastructure + Essential Backend (Product, Customer, Location, Inventory, Media)
 
@@ -26,8 +28,9 @@ docker-compose -f docker-compose.core.yml down
 ```
 
 **Access:**
+
 - Keycloak (Identity): http://localhost:8080 (admin/admin)
-- PgAdmin (Database): http://localhost:5050 (admin@yas.com/admin)
+- PgAdmin (Database): http://localhost:5050 (admin@shopdi.com/admin)
 - Product Service: http://localhost:8087
 - Customer Service: http://localhost:8088
 - Location Service: http://localhost:8084
@@ -39,6 +42,7 @@ docker-compose -f docker-compose.core.yml down
 ---
 
 ## 🛒 Option 2: Core + Business Services
+
 **RAM Required:** ~8-12GB  
 **Services:** Core + Cart, Order, Payment, Promotion, Tax, Delivery, Rating, Webhook
 
@@ -62,6 +66,7 @@ docker-compose -f docker-compose.core.yml down
 ```
 
 **Additional Access:**
+
 - Cart Service: http://localhost:8089
 - Order Service: http://localhost:8092
 - Payment Service: http://localhost:8093
@@ -75,6 +80,7 @@ docker-compose -f docker-compose.core.yml down
 ---
 
 ## 🔍 Option 3: Core + Support Services
+
 **RAM Required:** ~10-14GB  
 **Services:** Core + Search, Kafka, Redis, Recommendation, Elasticsearch
 
@@ -98,6 +104,7 @@ docker-compose -f docker-compose.core.yml down
 ```
 
 **Additional Access:**
+
 - Elasticsearch: http://localhost:9200
 - Search Service: http://localhost:8100
 - Kafka UI: http://localhost:8089
@@ -108,6 +115,7 @@ docker-compose -f docker-compose.core.yml down
 ---
 
 ## 🌐 Option 4: Full Stack (All Services)
+
 **RAM Required:** ~16-24GB  
 **Services:** Everything including Frontend
 
@@ -135,6 +143,7 @@ docker-compose -f docker-compose.core.yml down
 ```
 
 **Additional Access:**
+
 - Nginx Reverse Proxy: http://localhost
 - Backoffice UI: http://localhost:3000
 - Storefront UI: http://localhost:3001
@@ -145,6 +154,7 @@ docker-compose -f docker-compose.core.yml down
 ## 🛠️ Useful Commands
 
 ### Check Service Health
+
 ```bash
 # All services
 docker ps
@@ -157,6 +167,7 @@ docker-compose -f docker-compose.core.yml logs -f [service-name]
 ```
 
 ### Clean Up
+
 ```bash
 # Remove containers only
 docker-compose -f docker-compose.core.yml down
@@ -169,6 +180,7 @@ docker-compose -f docker-compose.core.yml down -v --rmi all
 ```
 
 ### Rebuild Services
+
 ```bash
 # Rebuild and restart
 docker-compose -f docker-compose.core.yml up -d --build
@@ -178,6 +190,7 @@ docker-compose -f docker-compose.core.yml up -d --build product
 ```
 
 ### Database Access
+
 ```bash
 # Via PgAdmin (GUI)
 # http://localhost:5050
@@ -194,18 +207,21 @@ docker exec -it $(docker ps -qf "name=postgres") psql -U admin -c "\l"
 ## 🔐 Default Credentials
 
 ### Keycloak (Identity Service)
+
 - URL: http://localhost:8080
 - Admin Console: http://localhost:8080/admin
 - Username: `admin`
 - Password: `admin`
-- Realm: `yas`
+- Realm: `shopdi`
 
 ### PgAdmin (Database Management)
+
 - URL: http://localhost:5050
-- Email: `admin@yas.com`
+- Email: `admin@shopdi.com`
 - Password: `admin`
 
 ### PostgreSQL
+
 - Host: `localhost:5432`
 - Username: `admin`
 - Password: `admin`
@@ -216,6 +232,7 @@ docker exec -it $(docker ps -qf "name=postgres") psql -U admin -c "\l"
 ## 🐛 Troubleshooting
 
 ### Services won't start
+
 ```bash
 # Check logs
 docker-compose -f docker-compose.core.yml logs
@@ -229,6 +246,7 @@ docker-compose -f docker-compose.core.yml restart product
 ```
 
 ### Out of Memory
+
 ```bash
 # Check Docker resource limits
 docker info | grep -i memory
@@ -238,6 +256,7 @@ docker info | grep -i memory
 ```
 
 ### Database connection errors
+
 ```bash
 # Wait for PostgreSQL to be ready
 docker-compose -f docker-compose.core.yml logs postgres
@@ -247,6 +266,7 @@ docker exec -it $(docker ps -qf "name=postgres") pg_isready -U admin
 ```
 
 ### Port conflicts
+
 ```bash
 # Check what's using the port
 lsof -i :8080
@@ -261,18 +281,19 @@ kill -9 <PID>
 
 ## 📊 Resource Requirements Summary
 
-| Setup | Services | RAM | Disk | CPU |
-|-------|----------|-----|------|-----|
-| Core | 9 | 4-6GB | 5GB | 2-4 cores |
-| Core + Business | 18 | 8-12GB | 10GB | 4-6 cores |
-| Core + Support | 14 | 10-14GB | 15GB | 4-6 cores |
-| Full Stack | 24+ | 16-24GB | 20GB | 6-8 cores |
+| Setup           | Services | RAM     | Disk | CPU       |
+| --------------- | -------- | ------- | ---- | --------- |
+| Core            | 9        | 4-6GB   | 5GB  | 2-4 cores |
+| Core + Business | 18       | 8-12GB  | 10GB | 4-6 cores |
+| Core + Support  | 14       | 10-14GB | 15GB | 4-6 cores |
+| Full Stack      | 24+      | 16-24GB | 20GB | 6-8 cores |
 
 ---
 
 ## 🎓 Development Workflow
 
 ### For Local Development (without Docker)
+
 ```bash
 # 1. Start only infrastructure
 docker-compose -f docker-compose.core.yml up -d postgres identity
@@ -288,6 +309,7 @@ cd storefront && npm run dev
 ```
 
 ### Building Services
+
 ```bash
 # Build all services (from root)
 mvn clean install -DskipTests
@@ -296,7 +318,7 @@ mvn clean install -DskipTests
 cd product && mvn clean package -DskipTests
 
 # Build Docker image
-cd product && docker build -t yas-product:latest .
+cd product && docker build -t shopdi-product:latest .
 ```
 
 ---

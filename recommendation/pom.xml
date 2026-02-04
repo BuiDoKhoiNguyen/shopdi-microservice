@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yas</groupId>
-        <artifactId>yas</artifactId>
+        <groupId>com.shopdi</groupId>
+        <artifactId>shopdi</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -13,7 +13,7 @@
     <name>recommendation</name>
     <artifactId>recommendation</artifactId>
     <version>${revision}</version>
-    <description>YAS Recommendation service</description>
+    <description>SHOPDI Recommendation service</description>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -41,7 +41,7 @@
 
         <!--  Common Library      -->
         <dependency>
-            <groupId>com.yas</groupId>
+            <groupId>com.shopdi</groupId>
             <artifactId>common-library</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -67,7 +67,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.yas</groupId>
+            <groupId>com.shopdi</groupId>
             <artifactId>common-library</artifactId>
             <version>${revision}</version>
             <classifier>tests</classifier>
@@ -105,7 +105,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.yas</groupId>
+            <groupId>com.shopdi</groupId>
             <artifactId>common-library</artifactId>
             <version>${revision}</version>
             <classifier>tests</classifier>

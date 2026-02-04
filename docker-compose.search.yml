@@ -2,12 +2,12 @@ version: "3.9"
 
 services:
   search:
-    image: ghcr.io/nashtech-garage/yas-search:latest
+    image: ghcr.io/nashtech-garage/shopdi-search:latest
     entrypoint: [ "./wait-for-it.sh", "elasticsearch:9200", "--timeout=300", "--", "java", "-jar", "/app.jar" ]
     environment:
     - SERVER_SERVLET_CONTEXT_PATH=/search
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/search
-    - YAS_SERVICES_PRODUCT
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/search
+    - SHOPDI_SERVICES_PRODUCT
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -27,7 +27,7 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   elasticsearch:
     image: elasticsearch:8.6.2
     volumes:
@@ -40,10 +40,10 @@ services:
       - "9200:9200"
       - "9300:9300"
     networks:
-      - yas-network
+      - shopdi-network
 
 networks:
-  yas-network:
+  shopdi-network:
 
 volumes:
   esdata:

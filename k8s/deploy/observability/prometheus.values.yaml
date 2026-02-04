@@ -1,4 +1,4 @@
-hostname: &hostname grafana.yas.local.com
+hostname: &hostname grafana.shopdi.local.com
 prometheus:
   prometheusSpec:
     enableRemoteWriteReceiver: true
@@ -8,7 +8,7 @@ grafana:
       type: postgres
       host: postgresql.postgres:5432
       name: grafana
-      user: yasadminuser
+      user: shopdiadminuser
       password: admin
       ssl_mode: require
   adminUser: admin

@@ -1,0 +1,8 @@
+package com.shopdi.inventory.viewmodel.product;
+
+public record ProductInfoVm(
+        long id,
+        String name,
+        String sku,
+        boolean existInWh) {
+}

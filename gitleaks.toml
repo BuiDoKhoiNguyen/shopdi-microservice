@@ -19,6 +19,6 @@ description = "global allow list"
 paths = [
   '''test-realm.json''',
   '''realm-export''',
-  '''keycloak-yas-realm-import.yaml''',
+  '''keycloak-shopdi-realm-import.yaml''',
   '''target'''
 ]

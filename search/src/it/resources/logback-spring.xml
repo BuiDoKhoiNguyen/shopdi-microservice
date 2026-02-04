@@ -9,7 +9,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.yas.search" level="DEBUG" additivity="false">
+    <logger name="com.shopdi.search" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
     <root level="INFO">

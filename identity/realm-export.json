@@ -73,7 +73,7 @@
       },
       {
         "id": "f2da71cd-654f-4beb-8ec8-fa78d6fc1219",
-        "name": "default-roles-yas",
+        "name": "default-roles-shopdi",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -362,7 +362,7 @@
   "groups": [],
   "defaultRole": {
     "id": "f2da71cd-654f-4beb-8ec8-fa78d6fc1219",
-    "name": "default-roles-yas",
+    "name": "default-roles-shopdi",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -430,7 +430,7 @@
       ],
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": ["default-roles-yas", "ADMIN"],
+      "realmRoles": ["default-roles-shopdi", "ADMIN"],
       "notBefore": 0,
       "groups": []
     },
@@ -445,7 +445,7 @@
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
-        "default-roles-yas"
+        "default-roles-shopdi"
       ],
       "clientRoles": {
         "realm-management": [
@@ -471,7 +471,7 @@
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
-        "default-roles-yas"
+        "default-roles-shopdi"
       ],
       "clientRoles": {
         "storefront-bff": [
@@ -1131,7 +1131,7 @@
         "http://localhost:8091/*",
         "http://localhost:8083/*",
         "http://localhost:8093/*",
-        "http://api.yas.local/*",
+        "http://api.shopdi.local/*",
         "http://localhost:8090/*",
         "http://localhost:8089/*",
         "http://localhost:8088/*",
@@ -1141,7 +1141,7 @@
         "http://localhost:8092/*"
       ],
       "webOrigins": [
-        "http://api.yas.local",
+        "http://api.shopdi.local",
         "http://localhost:8088",
         "http://localhost:8089",
         "http://localhost:8084",
@@ -1744,7 +1744,7 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {},
-  "loginTheme": "yas",
+  "loginTheme": "shopdi",
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"

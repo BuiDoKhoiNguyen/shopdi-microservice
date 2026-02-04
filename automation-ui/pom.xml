@@ -8,12 +8,12 @@
         <version>3.3.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.yas</groupId>
+    <groupId>com.shopdi</groupId>
     <artifactId>automation-ui</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
     <name>automation-ui</name>
-    <description>YAS automation-ui test</description>
+    <description>SHOPDI automation-ui test</description>
     <modules>
         <module>automation-base</module>
         <module>storefront</module>

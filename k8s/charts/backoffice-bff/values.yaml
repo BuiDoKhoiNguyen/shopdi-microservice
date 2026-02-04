@@ -1,16 +1,16 @@
 backend:
   image:
-    repository: ghcr.io/nashtech-garage/yas-backoffice-bff
+    repository: ghcr.io/nashtech-garage/shopdi-backoffice-bff
     tag: latest
 
   nameOverride: backoffice-bff
   fullnameOverride: backoffice-bff
   deployment:
     annotations:
-      configmap.reloader.stakater.com/reload: "yas-gateway-routes-config-configmap,backoffice-bff-extra-configmap"
+      configmap.reloader.stakater.com/reload: "shopdi-gateway-routes-config-configmap,backoffice-bff-extra-configmap"
   ingress:
     enabled: true
-    host: backoffice.yas.local.com
+    host: backoffice.shopdi.local.com
     path: /
   extraEnvs:
     - name: SPRING_PROFILES_ACTIVE
@@ -19,21 +19,21 @@ backend:
       value: http://backoffice-ui:3000
   extraEnvFroms:
     - secretRef:
-        name: yas-keycloak-credentials-secret
+        name: shopdi-keycloak-credentials-secret
     - secretRef:
-        name: yas-redis-credentials-secret
+        name: shopdi-redis-credentials-secret
   extraVolumes:
-    - name: yas-gateway-routes-config
+    - name: shopdi-gateway-routes-config
       configMap:
-        name: yas-gateway-routes-config-configmap
+        name: shopdi-gateway-routes-config-configmap
     - name: backoffice-bff-extra-config
       configMap:
         name: backoffice-bff-extra-configmap
   extraVolumeMounts:
-    - name: yas-gateway-routes-config
-      mountPath: /opt/yas/gateway-routes-config
+    - name: shopdi-gateway-routes-config
+      mountPath: /opt/shopdi/gateway-routes-config
     - name: backoffice-bff-extra-config
-      mountPath: /opt/yas/extra-config
+      mountPath: /opt/shopdi/extra-config
   extraApplicationConfigPaths:
-    - /opt/yas/gateway-routes-config/gateway-routes-config.yaml
-    - /opt/yas/extra-config/backoffice-bff-extra-config.yaml
+    - /opt/shopdi/gateway-routes-config/gateway-routes-config.yaml
+    - /opt/shopdi/extra-config/backoffice-bff-extra-config.yaml

@@ -1,12 +1,14 @@
-package com.yas.webhook.service;
+package com.shopdi.webhook.service;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.yas.webhook.integration.api.WebhookApi;
-import com.yas.webhook.model.WebhookEventNotification;
-import com.yas.webhook.model.dto.WebhookEventNotificationDto;
-import com.yas.webhook.repository.WebhookEventNotificationRepository;
+import com.shopdi.webhook.integration.api.WebhookApi;
+import com.shopdi.webhook.model.WebhookEventNotification;
+import com.shopdi.webhook.model.dto.WebhookEventNotificationDto;
+import com.shopdi.webhook.repository.WebhookEventNotificationRepository;
+import com.shopdi.webhook.service.WebhookService;
+
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,15 +31,15 @@ class WebhookServiceTest {
     void test_notifyToWebhook_ShouldNotException() {
 
         WebhookEventNotificationDto notificationDto = WebhookEventNotificationDto
-            .builder()
-            .notificationId(1L)
-            .url("")
-            .secret("")
-            .build();
+                .builder()
+                .notificationId(1L)
+                .url("")
+                .secret("")
+                .build();
 
         WebhookEventNotification notification = new WebhookEventNotification();
         when(webhookEventNotificationRepository.findById(notificationDto.getNotificationId()))
-            .thenReturn(Optional.of(notification));
+                .thenReturn(Optional.of(notification));
 
         webhookService.notifyToWebhook(notificationDto);
 

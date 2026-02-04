@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: yas-configuration-configmap
+  name: shopdi-configuration-configmap
   annotations:
     reloader.stakater.com/match: "true"
 data:
@@ -15,7 +15,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: yas-gateway-routes-config-configmap
+  name: shopdi-gateway-routes-config-configmap
   annotations:
     reloader.stakater.com/match: "true"
 data:

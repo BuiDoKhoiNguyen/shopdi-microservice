@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yas</groupId>
-        <artifactId>yas</artifactId>
+        <groupId>com.shopdi</groupId>
+        <artifactId>shopdi</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -13,12 +13,12 @@
     <artifactId>delivery</artifactId>
     <version>${revision}</version>
     <name>delivery</name>
-    <description>YAS Delivery service</description>
+    <description>SHOPDI Delivery service</description>
 
     <properties>
         <sonar.organization>nashtech-garage</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>nashtech-garage_yas-delivery</sonar.projectKey>
+        <sonar.projectKey>nashtech-garage_shopdi-delivery</sonar.projectKey>
     </properties>
 
 </project>

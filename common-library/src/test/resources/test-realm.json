@@ -69,7 +69,7 @@
       "attributes" : { }
     }, {
       "id" : "f2da71cd-654f-4beb-8ec8-fa78d6fc1219",
-      "name" : "default-roles-yas",
+      "name" : "default-roles-shopdi",
       "description" : "${role_default-roles}",
       "composite" : true,
       "composites" : {
@@ -433,7 +433,7 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "default-roles-yas", "ADMIN" ],
+    "realmRoles" : [ "default-roles-shopdi", "ADMIN" ],
     "clientRoles" : {
       "account" : [ "view-profile", "manage-account" ]
     },

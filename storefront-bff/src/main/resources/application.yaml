@@ -57,7 +57,7 @@ spring:
             - TokenRelay=
             - StripPrefix=1
         - id: api
-          uri: http://api.yas.local
+          uri: http://api.shopdi.local
           predicates:
             - Path=/api/**
           filters:
@@ -90,8 +90,8 @@ spring:
           predicates:
             - Path=/**
 ---
-yas:
+shopdi:
   services:
-    customer: http://api.yas.local/customer
-    cart: http://api.yas.local/cart
+    customer: http://api.shopdi.local/customer
+    cart: http://api.shopdi.local/cart
     token-identity: http://identity/realms/Yas/protocol/openid-connect/token

@@ -5,7 +5,7 @@ set -x
 helm repo add stakater https://stakater.github.io/stakater-charts
 helm repo update
 
-helm dependency build ../charts/yas-configuration
-helm upgrade --install yas-configuration ../charts/yas-configuration \
---namespace yas --create-namespace
+helm dependency build ../charts/shopdi-configuration
+helm upgrade --install shopdi-configuration ../charts/shopdi-configuration \
+--namespace shopdi --create-namespace
 

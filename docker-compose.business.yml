@@ -25,7 +25,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      - yas-network
+      - shopdi-network
 
   order:
     build:
@@ -42,7 +42,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      - yas-network
+      - shopdi-network
 
   payment:
     build:
@@ -59,7 +59,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      - yas-network
+      - shopdi-network
 
   payment-paypal:
     build:
@@ -72,7 +72,7 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
       - SERVER_PORT=8094
     networks:
-      - yas-network
+      - shopdi-network
 
   promotion:
     build:
@@ -89,7 +89,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      - yas-network
+      - shopdi-network
 
   tax:
     build:
@@ -106,7 +106,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      - yas-network
+      - shopdi-network
 
   delivery:
     build:
@@ -123,7 +123,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      - yas-network
+      - shopdi-network
 
   rating:
     build:
@@ -140,7 +140,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      - yas-network
+      - shopdi-network
 
   webhook:
     build:
@@ -157,8 +157,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      - yas-network
+      - shopdi-network
 
 networks:
-  yas-network:
+  shopdi-network:
     external: true

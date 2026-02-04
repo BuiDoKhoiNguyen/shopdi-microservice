@@ -1,4 +1,4 @@
-package com.yas.search.service;
+package com.shopdi.search.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,12 +10,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.yas.search.constant.enums.SortType;
-import com.yas.search.model.Product;
-import com.yas.search.model.ProductCriteriaDto;
-import com.yas.search.viewmodel.ProductListGetVm;
-import com.yas.search.viewmodel.ProductNameGetVm;
-import com.yas.search.viewmodel.ProductNameListVm;
+import com.shopdi.search.constant.enums.SortType;
+import com.shopdi.search.model.Product;
+import com.shopdi.search.model.ProductCriteriaDto;
+import com.shopdi.search.service.ProductService;
+import com.shopdi.search.viewmodel.ProductListGetVm;
+import com.shopdi.search.viewmodel.ProductNameGetVm;
+import com.shopdi.search.viewmodel.ProductNameListVm;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,8 +54,7 @@ class ProductServiceTest {
         Integer page = 0;
         Integer size = 10;
 
-        SearchHits<Product> searchHits =
-            getSearchHits();
+        SearchHits<Product> searchHits = getSearchHits();
 
         SearchPage<Product> productPage = mock(SearchPage.class);
         when(productPage.getNumber()).thenReturn(page);
@@ -68,12 +68,12 @@ class ProductServiceTest {
         when(elasticsearchOperations.search(any(NativeQuery.class), eq(Product.class))).thenReturn(searchHits);
 
         ProductCriteriaDto criteriaDto = new ProductCriteriaDto(
-            "test", 0, 10, "testBrand", "testCategory",
-            "testAttribute", 10.0, 100.0, SortType.PRICE_ASC);
+                "test", 0, 10, "testBrand", "testCategory",
+                "testAttribute", 10.0, 100.0, SortType.PRICE_ASC);
         ProductListGetVm result = productService.findProductAdvance(criteriaDto);
 
         verify(elasticsearchOperations, times(1))
-            .search(captor.capture(), eq(Product.class));
+                .search(captor.capture(), eq(Product.class));
         assertEquals("price: ASC", Objects.requireNonNull(captor.getValue().getSort()).toString());
 
         assertNotNull(result);
@@ -90,8 +90,7 @@ class ProductServiceTest {
         Integer page = 0;
         Integer size = 10;
 
-        SearchHits<Product> searchHits =
-            getSearchHits();
+        SearchHits<Product> searchHits = getSearchHits();
 
         SearchPage<Product> productPage = mock(SearchPage.class);
         when(productPage.getNumber()).thenReturn(page);
@@ -105,11 +104,11 @@ class ProductServiceTest {
         when(elasticsearchOperations.search(any(NativeQuery.class), eq(Product.class))).thenReturn(searchHits);
 
         ProductCriteriaDto criteriaDto = new ProductCriteriaDto("test", 0, 10, "testBrand", "testCategory",
-            "testAttribute", 10.0, 100.0, SortType.PRICE_DESC);
+                "testAttribute", 10.0, 100.0, SortType.PRICE_DESC);
         productService.findProductAdvance(criteriaDto);
 
         verify(elasticsearchOperations, times(1))
-            .search(captor.capture(), eq(Product.class));
+                .search(captor.capture(), eq(Product.class));
 
         assertEquals("price: DESC", Objects.requireNonNull(captor.getValue().getSort()).toString());
     }
@@ -117,8 +116,7 @@ class ProductServiceTest {
     @Test
     void testFindProductAdvance_whenSortTypeIsDefault_ReturnProductListGetVm() {
 
-        SearchHits<Product> searchHits =
-            getSearchHits();
+        SearchHits<Product> searchHits = getSearchHits();
 
         SearchPage<Product> productPage = mock(SearchPage.class);
         when(productPage.getNumber()).thenReturn(0);
@@ -132,12 +130,12 @@ class ProductServiceTest {
         when(elasticsearchOperations.search(any(NativeQuery.class), eq(Product.class))).thenReturn(searchHits);
 
         ProductCriteriaDto criteriaDto = new ProductCriteriaDto(
-            "test", 0, 10, "testBrand", "testCategory",
-            "testAttribute", 10.0, 100.0, SortType.DEFAULT);
+                "test", 0, 10, "testBrand", "testCategory",
+                "testAttribute", 10.0, 100.0, SortType.DEFAULT);
         productService.findProductAdvance(criteriaDto);
 
         verify(elasticsearchOperations, times(1))
-            .search(captor.capture(), eq(Product.class));
+                .search(captor.capture(), eq(Product.class));
 
         assertEquals("createdOn: DESC", Objects.requireNonNull(captor.getValue().getSort()).toString());
     }
@@ -145,11 +143,10 @@ class ProductServiceTest {
     @Test
     void testAutoCompleteProductName_whenExistsProducts_returnProductNameListVm() {
 
-        SearchHits<Product> searchHits =
-            getSearchHits();
+        SearchHits<Product> searchHits = getSearchHits();
 
         when(elasticsearchOperations.search(any(NativeQuery.class), eq(Product.class)))
-            .thenReturn(searchHits);
+                .thenReturn(searchHits);
 
         ProductNameListVm result = productService.autoCompleteProductName("Product");
 
@@ -164,36 +161,34 @@ class ProductServiceTest {
     private static SearchHits<Product> getSearchHits() {
 
         Product product = Product.builder()
-            .id(1L)
-            .name("Test Product")
-            .slug("test-product")
-            .price(20.0)
-            .isPublished(true)
-            .isVisibleIndividually(true)
-            .isAllowedToOrder(true)
-            .isFeatured(true)
-            .thumbnailMediaId(123L)
-            .categories(List.of("testCategory"))
-            .attributes(List.of("testAttribute"))
-            .createdOn(ZonedDateTime.now())
-            .build();
+                .id(1L)
+                .name("Test Product")
+                .slug("test-product")
+                .price(20.0)
+                .isPublished(true)
+                .isVisibleIndividually(true)
+                .isAllowedToOrder(true)
+                .isFeatured(true)
+                .thumbnailMediaId(123L)
+                .categories(List.of("testCategory"))
+                .attributes(List.of("testAttribute"))
+                .createdOn(ZonedDateTime.now())
+                .build();
 
         SearchHit<Product> searchHit = new SearchHit<>(
-            "products",
-            "1",
-            null,
-            1.0f,
-            null,
-            new HashMap<>(),
-            new HashMap<>(),
-            null,
-            null,
-            new ArrayList<>(),
-            product
-        );
+                "products",
+                "1",
+                null,
+                1.0f,
+                null,
+                new HashMap<>(),
+                new HashMap<>(),
+                null,
+                null,
+                new ArrayList<>(),
+                product);
 
-        return new SearchHits<>(
-        ) {
+        return new SearchHits<>() {
 
             @Override
             public @NotNull SearchHit<Product> getSearchHit(int index) {

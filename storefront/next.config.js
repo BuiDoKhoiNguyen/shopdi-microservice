@@ -5,7 +5,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: 'api.yas.local',
+        hostname: 'api.shopdi.local',
       },
     ],
   },

@@ -35,7 +35,7 @@ export function getDeliveryMethodTitle(deliveryMethod: EDeliveryMethod) {
       return 'Viettel Post';
     case EDeliveryMethod.SHOPEE_EXPRESS:
       return 'Shopee Express';
-    case EDeliveryMethod.YAS_EXPRESS:
+    case EDeliveryMethod.SHOPDI_EXPRESS:
       return 'Yas Express';
     default:
       return 'Preparing';

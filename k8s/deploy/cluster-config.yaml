@@ -1,7 +1,7 @@
-domain: yas.local.com
+domain: shopdi.local.com
 postgresql:
   replicas: 1
-  username: yasadminuser
+  username: shopdiadminuser
   password: admin
 kafka:
   replicas: 1
@@ -9,14 +9,14 @@ zookeeper:
   replicas: 1
 elasticsearch:
   replicas: 1
-  username: yas
+  username: shopdi
   password: LarUmB3A49NTg9YmgW4=
 keycloak:
   bootstrapAdmin:
     username: admin
     password: admin
-  backofficeRedirectUrl: http://backoffice.yas.local.com
-  storefrontRedirectUrl: http://storefront.yas.local.com
+  backofficeRedirectUrl: http://backoffice.shopdi.local.com
+  storefrontRedirectUrl: http://storefront.shopdi.local.com
 grafana:
   username: admin
   password: admin

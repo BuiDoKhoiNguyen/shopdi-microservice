@@ -1,6 +1,6 @@
 backend:
   image:
-    repository: ghcr.io/nashtech-garage/yas-payment
+    repository: ghcr.io/nashtech-garage/shopdi-payment
     tag: latest
 
   nameOverride: payment
@@ -14,6 +14,6 @@ backend:
         name: payment-application-configmap
   extraVolumeMounts:
     - name: payment-application-config
-      mountPath: /opt/yas/payment
+      mountPath: /opt/shopdi/payment
   extraApplicationConfigPaths:
-    - /opt/yas/payment/payment-application.yaml
+    - /opt/shopdi/payment/payment-application.yaml

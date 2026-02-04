@@ -1,4 +1,4 @@
-username: yasadminuser
+username: shopdiadminuser
 password: admin
 replicas: 1
 postgresqlVersion: "15"

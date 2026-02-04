@@ -36,7 +36,7 @@ jobs:
         if: ${{ env.FROM_ORIGINAL_REPOSITORY == 'true' }}
         uses: jwgmeligmeyling/checkstyle-github-action@master
         with:
-          path: '**/rating-checkstyle-result.xml'
+          path: "**/rating-checkstyle-result.xml"
       - name: Test Results
         uses: dorny/test-reporter@v1
         if: ${{ env.FROM_ORIGINAL_REPOSITORY == 'true' && (success() || failure()) }}
@@ -55,9 +55,9 @@ jobs:
         env:
           JAVA_HOME: /opt/jdk
         with:
-          project: 'yas'
-          path: '.'
-          format: 'HTML'
+          project: "shopdi"
+          path: "."
+          format: "HTML"
       - name: Upload OWASP Dependency Check results
         if: ${{ env.FROM_ORIGINAL_REPOSITORY == 'true' }}
         uses: actions/upload-artifact@master
@@ -72,7 +72,7 @@ jobs:
           token: ${{secrets.GITHUB_TOKEN}}
           min-coverage-overall: 80
           min-coverage-changed-files: 60
-          title: 'Rating Coverage Report'
+          title: "Rating Coverage Report"
           update-comment: true
       - name: Log in to the Container registry
         if: ${{ github.ref == 'refs/heads/main' }}
@@ -87,4 +87,4 @@ jobs:
         with:
           context: ./rating
           push: true
-          tags: ghcr.io/nashtech-garage/yas-rating:latest
+          tags: ghcr.io/nashtech-garage/shopdi-rating:latest

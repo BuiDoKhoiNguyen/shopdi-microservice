@@ -227,7 +227,7 @@ const Checkout = () => {
     );
     order.deliveryFee = 0;
     order.couponCode = checkout?.couponCode;
-    order.deliveryMethod = 'YAS_EXPRESS';
+    order.deliveryMethod = 'SHOPDI_EXPRESS';
     order.paymentStatus = 'PENDING';
     order.orderItemPostVms = orderItems;
 
@@ -314,9 +314,8 @@ const Checkout = () => {
                       </button>
                       <button
                         type="button"
-                        className={`btn btn-outline-primary fw-bold btn-sm ${
-                          addShippingAddress ? `active` : ``
-                        }`}
+                        className={`btn btn-outline-primary fw-bold btn-sm ${addShippingAddress ? `active` : ``
+                          }`}
                         onClick={() => setAddShippingAddress(true)}
                       >
                         Add new address <i className="bi bi-plus-circle-fill"></i>
@@ -355,9 +354,8 @@ const Checkout = () => {
                     <div className="col-lg-6">
                       <button
                         type="button"
-                        className={`btn btn-outline-primary  fw-bold btn-sm ${
-                          addBillingAddress ? `active` : ``
-                        }`}
+                        className={`btn btn-outline-primary  fw-bold btn-sm ${addBillingAddress ? `active` : ``
+                          }`}
                         onClick={() => {
                           setAddBillingAddress(true);
                           setSameAddress(false);
@@ -367,9 +365,8 @@ const Checkout = () => {
                       </button>
                     </div>
                     <div
-                      className={`checkout-address-card ${
-                        addBillingAddress || !sameAddress ? '' : 'd-none'
-                      }`}
+                      className={`checkout-address-card ${addBillingAddress || !sameAddress ? '' : 'd-none'
+                        }`}
                     >
                       <CheckOutAddress
                         address={billingAddress}

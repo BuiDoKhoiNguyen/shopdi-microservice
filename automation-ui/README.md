@@ -1,8 +1,9 @@
-# 🛠️ Automation Project for YAS Application
+# 🛠️ Automation Project for SHOPDI Application
 
-This project automates tests for the YAS application using modern Java technologies.
+This project automates tests for the SHOPDI application using modern Java technologies.
 
 ## 🧑‍💻 Technologies and Frameworks
+
 - **Java 21**
 - **Spring Boot 3.2**
 - **Cucumber**
@@ -12,6 +13,7 @@ This project automates tests for the YAS application using modern Java technolog
 - **SonarCloud**
 
 ## 🏗️ Local Development Architecture
+
 ```mermaid
 flowchart TD
   TestRunner("Test Runner (JUnit, TestNG)")
@@ -25,22 +27,26 @@ flowchart TD
   StepDefinitions --> Selenium
   Selenium --> WebApp
 ```
+
 ## 🚀 Getting Started
 
 To run the tests locally, follow the steps below:
 
-### 1. Start the YAS Application
-Ensure the YAS application is running in your local environment.
+### 1. Start the SHOPDI Application
+
+Ensure the SHOPDI application is running in your local environment.
 
 ### 2. Running Tests via Maven
+
 You can run the tests in two modes:
 
 - **Normal Mode**: Run the tests normally with the following command:
+
   ```bash
   mvn clean test
   ```
 
-- **Headless Mode**: 
+- **Headless Mode**:
   To run the tests in headless mode, use the following command:
   ```bash
   mvn clean test -Dheadless

@@ -1,4 +1,4 @@
-package com.yas.promotion.controller;
+package com.shopdi.promotion.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -6,8 +6,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.yas.promotion.viewmodel.PromotionVerifyResultDto;
-import com.yas.promotion.viewmodel.PromotionVerifyVm;
+import com.shopdi.promotion.viewmodel.PromotionVerifyResultDto;
+import com.shopdi.promotion.viewmodel.PromotionVerifyVm;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -32,15 +32,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.yas.promotion.PromotionApplication;
-import com.yas.promotion.model.enumeration.ApplyTo;
-import com.yas.promotion.model.enumeration.DiscountType;
-import com.yas.promotion.model.enumeration.UsageType;
-import com.yas.promotion.service.PromotionService;
-import com.yas.promotion.viewmodel.PromotionDetailVm;
-import com.yas.promotion.viewmodel.PromotionListVm;
-import com.yas.promotion.viewmodel.PromotionPostVm;
-import com.yas.promotion.viewmodel.PromotionPutVm;
+import com.shopdi.promotion.PromotionApplication;
+import com.shopdi.promotion.controller.PromotionController;
+import com.shopdi.promotion.model.enumeration.ApplyTo;
+import com.shopdi.promotion.model.enumeration.DiscountType;
+import com.shopdi.promotion.model.enumeration.UsageType;
+import com.shopdi.promotion.service.PromotionService;
+import com.shopdi.promotion.viewmodel.PromotionDetailVm;
+import com.shopdi.promotion.viewmodel.PromotionListVm;
+import com.shopdi.promotion.viewmodel.PromotionPostVm;
+import com.shopdi.promotion.viewmodel.PromotionPutVm;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = PromotionController.class)
@@ -83,8 +84,8 @@ class PromotionControllerTest {
         String request = objectWriter.writeValueAsString(promotionPostVm);
 
         this.mockMvc.perform(post("/backoffice/promotions")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
                 .andExpect(status().isCreated());
     }
 
@@ -108,8 +109,8 @@ class PromotionControllerTest {
         String request = objectWriter.writeValueAsString(promotionPostVm);
 
         this.mockMvc.perform(post("/backoffice/promotions")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
                 .andExpect(status().isBadRequest());
     }
 
@@ -133,129 +134,129 @@ class PromotionControllerTest {
         String request = objectWriter.writeValueAsString(promotionPostVm);
 
         this.mockMvc.perform(post("/backoffice/promotions")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void testCreatePromotion_whenDiscountAmountIsSmallerThanZero_thenReturnBadRequest() throws Exception {
         PromotionPostVm promotionPostVm = PromotionPostVm.builder()
-            .name("amount smaller than 0")
-            .slug("amount-smaller-than-0")
-            .discountAmount(-15L)
-            .applyTo(ApplyTo.PRODUCT)
-            .couponCode("code")
-            .usageType(UsageType.UNLIMITED)
-            .discountType(DiscountType.FIXED)
-            .productIds(List.of(1L, 2L, 3L))
-            .isActive(true)
-            .usageLimit(0)
-            .startDate(Date.from(Instant.now()))
-            .endDate(Date.from(Instant.now().plus(30, ChronoUnit.DAYS)))
-            .build();
+                .name("amount smaller than 0")
+                .slug("amount-smaller-than-0")
+                .discountAmount(-15L)
+                .applyTo(ApplyTo.PRODUCT)
+                .couponCode("code")
+                .usageType(UsageType.UNLIMITED)
+                .discountType(DiscountType.FIXED)
+                .productIds(List.of(1L, 2L, 3L))
+                .isActive(true)
+                .usageLimit(0)
+                .startDate(Date.from(Instant.now()))
+                .endDate(Date.from(Instant.now().plus(30, ChronoUnit.DAYS)))
+                .build();
 
         String request = objectWriter.writeValueAsString(promotionPostVm);
 
         this.mockMvc.perform(post("/backoffice/promotions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
-            .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     void testCreatePromotion_whenDiscountPercentageIsSmallerThanZero_thenReturnBadRequest() throws Exception {
         PromotionPostVm promotionPostVm = PromotionPostVm.builder()
-            .name("percentage smaller than 0")
-            .slug("percentage-smaller-than-0")
-            .discountPercentage(-2L)
-            .applyTo(ApplyTo.PRODUCT)
-            .couponCode("code")
-            .usageType(UsageType.UNLIMITED)
-            .discountType(DiscountType.PERCENTAGE)
-            .productIds(List.of(1L, 2L, 3L))
-            .isActive(true)
-            .usageLimit(0)
-            .startDate(Date.from(Instant.now()))
-            .endDate(Date.from(Instant.now().plus(30, ChronoUnit.DAYS)))
-            .build();
+                .name("percentage smaller than 0")
+                .slug("percentage-smaller-than-0")
+                .discountPercentage(-2L)
+                .applyTo(ApplyTo.PRODUCT)
+                .couponCode("code")
+                .usageType(UsageType.UNLIMITED)
+                .discountType(DiscountType.PERCENTAGE)
+                .productIds(List.of(1L, 2L, 3L))
+                .isActive(true)
+                .usageLimit(0)
+                .startDate(Date.from(Instant.now()))
+                .endDate(Date.from(Instant.now().plus(30, ChronoUnit.DAYS)))
+                .build();
 
         String request = objectWriter.writeValueAsString(promotionPostVm);
 
         this.mockMvc.perform(post("/backoffice/promotions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
-            .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     void testCreatePromotion_whenDiscountPercentageIsGreaterThanHundred_thenReturnBadRequest() throws Exception {
         PromotionPostVm promotionPostVm = PromotionPostVm.builder()
-            .name("percentage greater than 100")
-            .slug("percentage-greater-than-100")
-            .discountPercentage(112L)
-            .applyTo(ApplyTo.PRODUCT)
-            .couponCode("code")
-            .usageType(UsageType.UNLIMITED)
-            .discountType(DiscountType.PERCENTAGE)
-            .productIds(List.of(1L, 2L, 3L))
-            .isActive(true)
-            .usageLimit(0)
-            .startDate(Date.from(Instant.now()))
-            .endDate(Date.from(Instant.now().plus(30, ChronoUnit.DAYS)))
-            .build();
+                .name("percentage greater than 100")
+                .slug("percentage-greater-than-100")
+                .discountPercentage(112L)
+                .applyTo(ApplyTo.PRODUCT)
+                .couponCode("code")
+                .usageType(UsageType.UNLIMITED)
+                .discountType(DiscountType.PERCENTAGE)
+                .productIds(List.of(1L, 2L, 3L))
+                .isActive(true)
+                .usageLimit(0)
+                .startDate(Date.from(Instant.now()))
+                .endDate(Date.from(Instant.now().plus(30, ChronoUnit.DAYS)))
+                .build();
 
         String request = objectWriter.writeValueAsString(promotionPostVm);
 
         this.mockMvc.perform(post("/backoffice/promotions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
-            .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     void testListPromotions_whenValidRequest_thenReturnPromotionListVm() throws Exception {
 
         PromotionDetailVm promoDetail1 = PromotionDetailVm.builder()
-            .id(1L)
-            .name("Winter Sale")
-            .slug("winter-sale")
-            .description("Get up to 50% off on winter clothing.")
-            .couponCode("WINTER50")
-            .usageLimit(100)
-            .usageCount(25)
-            .discountType(DiscountType.PERCENTAGE)
-            .discountPercentage(50L)
-            .discountAmount(null)
-            .isActive(true)
-            .build();
+                .id(1L)
+                .name("Winter Sale")
+                .slug("winter-sale")
+                .description("Get up to 50% off on winter clothing.")
+                .couponCode("WINTER50")
+                .usageLimit(100)
+                .usageCount(25)
+                .discountType(DiscountType.PERCENTAGE)
+                .discountPercentage(50L)
+                .discountAmount(null)
+                .isActive(true)
+                .build();
 
         PromotionDetailVm promoDetail2 = PromotionDetailVm.builder()
-            .id(2L)
-            .name("Summer Clearance")
-            .slug("summer-clearance")
-            .description("Flat $20 off on all summer products.")
-            .couponCode("SUMMER20")
-            .usageLimit(200)
-            .usageCount(50)
-            .discountPercentage(null)
-            .discountAmount(20L)
-            .isActive(true)
-            .build();
+                .id(2L)
+                .name("Summer Clearance")
+                .slug("summer-clearance")
+                .description("Flat $20 off on all summer products.")
+                .couponCode("SUMMER20")
+                .usageLimit(200)
+                .usageCount(50)
+                .discountPercentage(null)
+                .discountAmount(20L)
+                .isActive(true)
+                .build();
         List<PromotionDetailVm> promotionDetails = new ArrayList<>();
         promotionDetails.add(promoDetail1);
         promotionDetails.add(promoDetail2);
 
         PromotionListVm promotionList = PromotionListVm.builder()
-            .promotionDetailVmList(promotionDetails)
-            .pageNo(1)
-            .pageSize(10)
-            .totalElements(25)
-            .totalPages(3)
-            .build();
+                .promotionDetailVmList(promotionDetails)
+                .pageNo(1)
+                .pageSize(10)
+                .totalElements(25)
+                .totalPages(3)
+                .build();
 
         when(promotionService.getPromotions(anyInt(), anyInt(), anyString(), anyString(),
-            any(Instant.class), any(Instant.class))).thenReturn(promotionList);
+                any(Instant.class), any(Instant.class))).thenReturn(promotionList);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/backoffice/promotions")
                 .param("pageNo", "0")
@@ -265,8 +266,8 @@ class PromotionControllerTest {
                 .param("startDate", "1970-01-01T00:00:00Z")
                 .param("endDate", Instant.now().toString())
                 .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().json(objectWriter.writeValueAsString(promotionList)));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(objectWriter.writeValueAsString(promotionList)));
     }
 
     @Test
@@ -275,26 +276,26 @@ class PromotionControllerTest {
         PromotionPutVm promotionPutVm = getPromotionPutVm();
 
         PromotionDetailVm promoDetail = PromotionDetailVm.builder()
-            .id(1L)
-            .name("Holiday Discount")
-            .slug("holiday-discount")
-            .description("Enjoy a 30% discount on all items during the holiday season.")
-            .couponCode("HOLIDAY30")
-            .usageLimit(100)
-            .usageCount(5)
-            .discountType(DiscountType.PERCENTAGE)
-            .discountPercentage(30L)
-            .discountAmount(null)
-            .isActive(true)
-            .build();
+                .id(1L)
+                .name("Holiday Discount")
+                .slug("holiday-discount")
+                .description("Enjoy a 30% discount on all items during the holiday season.")
+                .couponCode("HOLIDAY30")
+                .usageLimit(100)
+                .usageCount(5)
+                .discountType(DiscountType.PERCENTAGE)
+                .discountPercentage(30L)
+                .discountAmount(null)
+                .isActive(true)
+                .build();
 
         when(promotionService.updatePromotion(promotionPutVm)).thenReturn(promoDetail);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/backoffice/promotions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectWriter.writeValueAsString(promotionPutVm)))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().json(objectWriter.writeValueAsString(promoDetail)));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(objectWriter.writeValueAsString(promoDetail)));
     }
 
     @Test
@@ -305,7 +306,7 @@ class PromotionControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/backoffice/promotions/{promotionId}", promotionId)
                 .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
         verify(promotionService).deletePromotion(promotionId);
 
@@ -314,41 +315,39 @@ class PromotionControllerTest {
     @Test
     void test_getPromotion_success() throws Exception {
         PromotionDetailVm promoDetail = PromotionDetailVm.builder()
-            .id(1L)
-            .name("Winter Sale")
-            .slug("winter-sale")
-            .description("Get up to 50% off on winter clothing.")
-            .couponCode("WINTER50")
-            .usageLimit(100)
-            .usageCount(25)
-            .discountType(DiscountType.PERCENTAGE)
-            .discountPercentage(50L)
-            .discountAmount(null)
-            .isActive(true)
-            .build();
+                .id(1L)
+                .name("Winter Sale")
+                .slug("winter-sale")
+                .description("Get up to 50% off on winter clothing.")
+                .couponCode("WINTER50")
+                .usageLimit(100)
+                .usageCount(25)
+                .discountType(DiscountType.PERCENTAGE)
+                .discountPercentage(50L)
+                .discountAmount(null)
+                .isActive(true)
+                .build();
 
         when(promotionService.getPromotion(1L)).thenReturn(promoDetail);
         mockMvc.perform(MockMvcRequestBuilders.get("/backoffice/promotions/{promotionId}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().json(objectWriter.writeValueAsString(promoDetail)));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(objectWriter.writeValueAsString(promoDetail)));
     }
 
     @Test
     void verify_promotion_with_valid_data_returns_expected_result() {
         PromotionVerifyVm promotionVerifyInfo = new PromotionVerifyVm(
-            "coupon-code-1",
-            100000L,
-            List.of(1L)
-        );
+                "coupon-code-1",
+                100000L,
+                List.of(1L));
         // Set valid data in promotionVerifyInfo
         PromotionVerifyResultDto expectedResult = new PromotionVerifyResultDto(
-            true,
-            1L,
-            "coupon-code-1",
-            DiscountType.FIXED,
-            10000L
-        );
+                true,
+                1L,
+                "coupon-code-1",
+                DiscountType.FIXED,
+                10000L);
         // Set expected result data
 
         when(promotionService.verifyPromotion(promotionVerifyInfo)).thenReturn(expectedResult);

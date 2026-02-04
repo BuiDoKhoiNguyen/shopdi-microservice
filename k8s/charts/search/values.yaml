@@ -1,6 +1,6 @@
 backend:
   image:
-    repository: ghcr.io/nashtech-garage/yas-search
+    repository: ghcr.io/nashtech-garage/shopdi-search
     tag: latest
 
   nameOverride: search
@@ -10,13 +10,13 @@ backend:
     enabled: false
   extraEnvFroms:
     - secretRef:
-        name: yas-elasticsearch-credentials-secret
+        name: shopdi-elasticsearch-credentials-secret
   extraVolumes:
     - name: search-application
       configMap:
         name: search-application-configmap
   extraVolumeMounts:
     - name: search-application
-      mountPath: /opt/yas/search
+      mountPath: /opt/shopdi/search
   extraApplicationConfigPaths:
-    - /opt/yas/search/search-application.yaml
+    - /opt/shopdi/search/search-application.yaml

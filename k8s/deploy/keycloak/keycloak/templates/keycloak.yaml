@@ -33,11 +33,11 @@ spec:
     podTemplate:
       spec:
         volumes:
-          - name: yas-themes
+          - name: shopdi-themes
             configMap:
-              name: yas-themes-configmap
+              name: shopdi-themes-configmap
         containers:
           - name: keycloak
             volumeMounts:
-              - name: yas-themes
+              - name: shopdi-themes
                 mountPath: /opt/keycloak/providers

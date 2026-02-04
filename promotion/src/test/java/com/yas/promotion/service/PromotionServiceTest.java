@@ -1,24 +1,26 @@
-package com.yas.promotion.service;
+package com.shopdi.promotion.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.yas.commonlibrary.exception.BadRequestException;
-import com.yas.commonlibrary.exception.DuplicatedException;
-import com.yas.commonlibrary.exception.NotFoundException;
-import com.yas.promotion.PromotionApplication;
-import com.yas.promotion.model.Promotion;
-import com.yas.promotion.model.PromotionApply;
-import com.yas.promotion.model.enumeration.ApplyTo;
-import com.yas.promotion.model.enumeration.DiscountType;
-import com.yas.promotion.model.enumeration.UsageType;
-import com.yas.promotion.repository.PromotionRepository;
-import com.yas.promotion.utils.Constants;
-import com.yas.promotion.viewmodel.ProductVm;
-import com.yas.promotion.viewmodel.PromotionDetailVm;
-import com.yas.promotion.viewmodel.PromotionListVm;
-import com.yas.promotion.viewmodel.PromotionPostVm;
-import com.yas.promotion.viewmodel.PromotionVerifyVm;
+import com.shopdi.commonlibrary.exception.BadRequestException;
+import com.shopdi.commonlibrary.exception.DuplicatedException;
+import com.shopdi.commonlibrary.exception.NotFoundException;
+import com.shopdi.promotion.PromotionApplication;
+import com.shopdi.promotion.model.Promotion;
+import com.shopdi.promotion.model.PromotionApply;
+import com.shopdi.promotion.model.enumeration.ApplyTo;
+import com.shopdi.promotion.model.enumeration.DiscountType;
+import com.shopdi.promotion.model.enumeration.UsageType;
+import com.shopdi.promotion.repository.PromotionRepository;
+import com.shopdi.promotion.service.ProductService;
+import com.shopdi.promotion.service.PromotionService;
+import com.shopdi.promotion.utils.Constants;
+import com.shopdi.promotion.viewmodel.ProductVm;
+import com.shopdi.promotion.viewmodel.PromotionDetailVm;
+import com.shopdi.promotion.viewmodel.PromotionListVm;
+import com.shopdi.promotion.viewmodel.PromotionPostVm;
+import com.shopdi.promotion.viewmodel.PromotionVerifyVm;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -64,8 +66,8 @@ class PromotionServiceTest {
                 .build();
 
         var promotionApply = PromotionApply.builder()
-            .promotion(promotion1)
-            .brandId(1L).build();
+                .promotion(promotion1)
+                .brandId(1L).build();
         promotion1.setPromotionApplies(List.of(promotionApply));
 
         promotion1 = promotionRepository.save(promotion1);
@@ -86,50 +88,50 @@ class PromotionServiceTest {
                 .build();
 
         var promotionApply2 = PromotionApply.builder()
-            .promotion(promotion2)
-            .productId(1L).build();
+                .promotion(promotion2)
+                .productId(1L).build();
         promotion2.setPromotionApplies(List.of(promotionApply2));
 
         promotionRepository.save(promotion2);
 
         Promotion promotion3 = Promotion.builder()
-            .name("Promotion 3")
-            .slug("promotion-3")
-            .description("Description 3")
-            .couponCode("code3")
-            .discountAmount(200L)
-            .discountPercentage(20L)
-            .isActive(true)
-            .startDate(Instant.now().plus(30, ChronoUnit.DAYS))
-            .endDate(Instant.now().plus(60, ChronoUnit.DAYS))
-            .applyTo(ApplyTo.CATEGORY)
-            .discountType(DiscountType.FIXED)
-            .minimumOrderPurchaseAmount(100L)
-            .build();
+                .name("Promotion 3")
+                .slug("promotion-3")
+                .description("Description 3")
+                .couponCode("code3")
+                .discountAmount(200L)
+                .discountPercentage(20L)
+                .isActive(true)
+                .startDate(Instant.now().plus(30, ChronoUnit.DAYS))
+                .endDate(Instant.now().plus(60, ChronoUnit.DAYS))
+                .applyTo(ApplyTo.CATEGORY)
+                .discountType(DiscountType.FIXED)
+                .minimumOrderPurchaseAmount(100L)
+                .build();
 
         var promotionApply3 = PromotionApply.builder()
-            .promotion(promotion2)
-            .productId(1L).build();
+                .promotion(promotion2)
+                .productId(1L).build();
         promotion3.setPromotionApplies(List.of(promotionApply3));
 
         promotionRepository.save(promotion3);
 
         wrongRangeDatePromotion = Promotion.builder()
-            .name("Wrong date")
-            .slug("wrong-date")
-            .description("Promotion with invalid date range")
-            .couponCode("codeWrong")
-            .discountAmount(200L)
-            .discountPercentage(20L)
-            .applyTo(ApplyTo.PRODUCT)
-            .usageType(UsageType.LIMITED)
-            .minimumOrderPurchaseAmount(100L)
-            .usageCount(10)
-            .usageLimit(10)
-            .isActive(true)
-            .startDate(Instant.now().plus(30, ChronoUnit.DAYS))
-            .endDate(Instant.now().plus(60, ChronoUnit.DAYS))
-            .build();
+                .name("Wrong date")
+                .slug("wrong-date")
+                .description("Promotion with invalid date range")
+                .couponCode("codeWrong")
+                .discountAmount(200L)
+                .discountPercentage(20L)
+                .applyTo(ApplyTo.PRODUCT)
+                .usageType(UsageType.LIMITED)
+                .minimumOrderPurchaseAmount(100L)
+                .usageCount(10)
+                .usageLimit(10)
+                .isActive(true)
+                .startDate(Instant.now().plus(30, ChronoUnit.DAYS))
+                .endDate(Instant.now().plus(60, ChronoUnit.DAYS))
+                .build();
         wrongRangeDatePromotion = promotionRepository.save(wrongRangeDatePromotion);
     }
 
@@ -167,7 +169,7 @@ class PromotionServiceTest {
                 .couponCode("code3")
                 .build();
         DuplicatedException duplicatedException = assertThrows(DuplicatedException.class,
-            () -> promotionService.createPromotion(promotionPostVm));
+                () -> promotionService.createPromotion(promotionPostVm));
         assertEquals("The coupon code code3 is already existed", duplicatedException.getMessage());
     }
 
@@ -190,17 +192,16 @@ class PromotionServiceTest {
     @Test
     void createPromotion_WhenEndDateBeforeStartDate_ThenDateRangeExceptionThrown() {
         promotionPostVm = PromotionPostVm.builder()
-            .applyTo(ApplyTo.PRODUCT)
-            .name("12345")
-            .couponCode("cp-12345")
-            .productIds(List.of(1L, 2L, 3L))
-            .endDate(Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
-            .startDate(Date.from(Instant.now()))
-            .build();
+                .applyTo(ApplyTo.PRODUCT)
+                .name("12345")
+                .couponCode("cp-12345")
+                .productIds(List.of(1L, 2L, 3L))
+                .endDate(Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
+                .startDate(Date.from(Instant.now()))
+                .build();
 
-        BadRequestException exception = assertThrows(BadRequestException.class, () ->
-            promotionService.createPromotion(promotionPostVm)
-        );
+        BadRequestException exception = assertThrows(BadRequestException.class,
+                () -> promotionService.createPromotion(promotionPostVm));
         assertEquals(String.format(Constants.ErrorCode.DATE_RANGE_INVALID), exception.getMessage());
     }
 
@@ -271,7 +272,7 @@ class PromotionServiceTest {
 
     @Test
     void testVerifyPromotion_ProductNotFound() {
-        var promotionVerifyVm = new PromotionVerifyVm("code2", 1000L, List.of(1L,2L,3L));
+        var promotionVerifyVm = new PromotionVerifyVm("code2", 1000L, List.of(1L, 2L, 3L));
         Mockito.when(productService.getProductByCategoryIds(ArgumentMatchers.anyList())).thenReturn(List.of());
 
         // Expect a NotFoundException due to no products found for promotion
@@ -285,12 +286,11 @@ class PromotionServiceTest {
     @Test
     void verifyPromotion_applyToBrand_ThenSuccess() {
         PromotionVerifyVm promotionVerifyData = new PromotionVerifyVm(
-            "code1",
-            1000000L,
-            List.of(1L, 2L, 3L)
-        );
+                "code1",
+                1000000L,
+                List.of(1L, 2L, 3L));
         Mockito.when(productService.getProductByBrandIds(ArgumentMatchers.anyList()))
-            .thenReturn(createProductVms());
+                .thenReturn(createProductVms());
         var result = promotionService.verifyPromotion(promotionVerifyData);
 
         assertEquals(true, result.isValid());
@@ -302,12 +302,11 @@ class PromotionServiceTest {
     @Test
     void verifyPromotion_applyToProduct_ThenSuccess() {
         PromotionVerifyVm promotionVerifyData = new PromotionVerifyVm(
-            "code2",
-            1000000L,
-            List.of(1L, 2L, 3L)
-        );
+                "code2",
+                1000000L,
+                List.of(1L, 2L, 3L));
         Mockito.when(productService.getProductByIds(ArgumentMatchers.anyList()))
-            .thenReturn(createProductVms());
+                .thenReturn(createProductVms());
         var result = promotionService.verifyPromotion(promotionVerifyData);
 
         assertEquals(true, result.isValid());
@@ -319,12 +318,11 @@ class PromotionServiceTest {
     @Test
     void verifyPromotion_applyToCategory_ThenSuccess() {
         PromotionVerifyVm promotionVerifyData = new PromotionVerifyVm(
-            "code3",
-            1000000L,
-            List.of(1L, 2L, 3L)
-        );
+                "code3",
+                1000000L,
+                List.of(1L, 2L, 3L));
         Mockito.when(productService.getProductByCategoryIds(ArgumentMatchers.anyList()))
-            .thenReturn(createProductVms());
+                .thenReturn(createProductVms());
         var result = promotionService.verifyPromotion(promotionVerifyData);
 
         assertEquals(true, result.isValid());
@@ -335,18 +333,16 @@ class PromotionServiceTest {
 
     private List<ProductVm> createProductVms() {
         return List.of(
-            new ProductVm(
-                1L,
-                "Product 01",
-                "product-01",
-                true,
-                true,
-                false,
-                true,
-                10000000.0,
-                ZonedDateTime.now(),
-                2L
-            )
-        );
+                new ProductVm(
+                        1L,
+                        "Product 01",
+                        "product-01",
+                        true,
+                        true,
+                        false,
+                        true,
+                        10000000.0,
+                        ZonedDateTime.now(),
+                        2L));
     }
 }

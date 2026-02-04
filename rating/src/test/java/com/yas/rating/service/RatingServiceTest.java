@@ -1,4 +1,4 @@
-package com.yas.rating.service;
+package com.shopdi.rating.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -7,17 +7,20 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.yas.commonlibrary.exception.AccessDeniedException;
-import com.yas.commonlibrary.exception.NotFoundException;
-import com.yas.commonlibrary.exception.ResourceExistedException;
-import com.yas.rating.RatingApplication;
-import com.yas.rating.model.Rating;
-import com.yas.rating.repository.RatingRepository;
-import com.yas.rating.viewmodel.CustomerVm;
-import com.yas.rating.viewmodel.OrderExistsByProductAndUserGetVm;
-import com.yas.rating.viewmodel.RatingListVm;
-import com.yas.rating.viewmodel.RatingPostVm;
-import com.yas.rating.viewmodel.RatingVm;
+import com.shopdi.commonlibrary.exception.AccessDeniedException;
+import com.shopdi.commonlibrary.exception.NotFoundException;
+import com.shopdi.commonlibrary.exception.ResourceExistedException;
+import com.shopdi.rating.RatingApplication;
+import com.shopdi.rating.model.Rating;
+import com.shopdi.rating.repository.RatingRepository;
+import com.shopdi.rating.service.CustomerService;
+import com.shopdi.rating.service.OrderService;
+import com.shopdi.rating.service.RatingService;
+import com.shopdi.rating.viewmodel.CustomerVm;
+import com.shopdi.rating.viewmodel.OrderExistsByProductAndUserGetVm;
+import com.shopdi.rating.viewmodel.RatingListVm;
+import com.shopdi.rating.viewmodel.RatingPostVm;
+import com.shopdi.rating.viewmodel.RatingVm;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -47,31 +50,30 @@ class RatingServiceTest {
     @BeforeEach
     void setUp() {
         List<Rating> ratingList = List.of(
-            Rating.builder()
-                .content("comment 1")
-                .ratingStar(4)
-                .productId(1L)
-                .productName("product1")
-                .firstName("Duy")
-                .lastName("Nguyen")
-                .build(),
-            Rating.builder()
-                .content("comment 2")
-                .ratingStar(2)
-                .productId(1L)
-                .productName("product1")
-                .firstName("Hai")
-                .lastName("Le")
-                .build(),
-            Rating.builder()
-                .content("comment 3")
-                .ratingStar(3)
-                .productId(2L)
-                .productName("product2")
-                .firstName("Cuong")
-                .lastName("Tran")
-                .build()
-        );
+                Rating.builder()
+                        .content("comment 1")
+                        .ratingStar(4)
+                        .productId(1L)
+                        .productName("product1")
+                        .firstName("Duy")
+                        .lastName("Nguyen")
+                        .build(),
+                Rating.builder()
+                        .content("comment 2")
+                        .ratingStar(2)
+                        .productId(1L)
+                        .productName("product1")
+                        .firstName("Hai")
+                        .lastName("Le")
+                        .build(),
+                Rating.builder()
+                        .content("comment 3")
+                        .ratingStar(3)
+                        .productId(2L)
+                        .productName("product2")
+                        .firstName("Cuong")
+                        .lastName("Tran")
+                        .build());
         ratingRepository.saveAll(ratingList);
     }
 
@@ -116,7 +118,8 @@ class RatingServiceTest {
         int totalPage = 1;
         int pageNo = 0;
         int pageSize = 10;
-        RatingListVm actualResponse = ratingService.getRatingListWithFilter(proName, cusName, message, createdFrom, createdTo, pageNo, pageSize);
+        RatingListVm actualResponse = ratingService.getRatingListWithFilter(proName, cusName, message, createdFrom,
+                createdTo, pageNo, pageSize);
         assertEquals(totalPage, actualResponse.totalPages());
         assertEquals(1, actualResponse.totalElements());
         assertEquals(proName, actualResponse.ratingList().getFirst().productName());
@@ -133,11 +136,12 @@ class RatingServiceTest {
         when(authentication.getToken()).thenReturn(jwt);
         when(authentication.getName()).thenReturn(userId);
         when(jwt.getSubject()).thenReturn(userId);
-        when(orderService.checkOrderExistsByProductAndUserWithStatus(anyLong())).
-                thenReturn(new OrderExistsByProductAndUserGetVm(true));
+        when(orderService.checkOrderExistsByProductAndUserWithStatus(anyLong()))
+                .thenReturn(new OrderExistsByProductAndUserGetVm(true));
         when(customerService.getCustomer()).thenReturn(new CustomerVm(userId, null, "Cuong", "Tran"));
 
-        RatingPostVm ratingPostVm = RatingPostVm.builder().content("comment 4").productName("product3").star(4).productId(3L).build();
+        RatingPostVm ratingPostVm = RatingPostVm.builder().content("comment 4").productName("product3").star(4)
+                .productId(3L).build();
         RatingVm ratingVm = ratingService.createRating(ratingPostVm);
         assertEquals(ratingPostVm.productName(), ratingVm.productName());
         assertEquals(ratingPostVm.content(), ratingVm.content());
@@ -146,7 +150,8 @@ class RatingServiceTest {
 
     @Test
     void createRating_InvalidAuthorization_ShouldThrowAccessDeniedException() {
-        RatingPostVm ratingPostVm = RatingPostVm.builder().content("comment 4").productName("product3").star(4).productId(3L).build();
+        RatingPostVm ratingPostVm = RatingPostVm.builder().content("comment 4").productName("product3").star(4)
+                .productId(3L).build();
 
         Jwt jwt = mock(Jwt.class);
         JwtAuthenticationToken authentication = mock(JwtAuthenticationToken.class);
@@ -154,7 +159,8 @@ class RatingServiceTest {
         when(authentication.getToken()).thenReturn(jwt);
         when(authentication.getName()).thenReturn(userId);
         when(jwt.getSubject()).thenReturn(userId);
-        when(orderService.checkOrderExistsByProductAndUserWithStatus(anyLong())).thenReturn(new OrderExistsByProductAndUserGetVm(false));
+        when(orderService.checkOrderExistsByProductAndUserWithStatus(anyLong()))
+                .thenReturn(new OrderExistsByProductAndUserGetVm(false));
 
         AccessDeniedException exception = assertThrows(AccessDeniedException.class,
                 () -> ratingService.createRating(ratingPostVm));
@@ -164,7 +170,8 @@ class RatingServiceTest {
 
     @Test
     void createRating_ExistedRating_ShouldThrowResourceExistedException() {
-        RatingPostVm ratingPostVm = RatingPostVm.builder().productId(1L).content("comment 4").productName("product3").star(4).build();
+        RatingPostVm ratingPostVm = RatingPostVm.builder().productId(1L).content("comment 4").productName("product3")
+                .star(4).build();
 
         Jwt jwt = mock(Jwt.class);
         JwtAuthenticationToken authentication = mock(JwtAuthenticationToken.class);
@@ -173,7 +180,8 @@ class RatingServiceTest {
         when(authentication.getName()).thenReturn("");
         when(jwt.getSubject()).thenReturn("");
 
-        when(orderService.checkOrderExistsByProductAndUserWithStatus(anyLong())).thenReturn(new OrderExistsByProductAndUserGetVm(true));
+        when(orderService.checkOrderExistsByProductAndUserWithStatus(anyLong()))
+                .thenReturn(new OrderExistsByProductAndUserGetVm(true));
 
         ResourceExistedException exception = assertThrows(ResourceExistedException.class,
                 () -> ratingService.createRating(ratingPostVm));
@@ -224,20 +232,20 @@ class RatingServiceTest {
 
     @Test
     void testGetLatestRatings_WhenCountLessThen1_returnEmpty() {
-        List<RatingVm>  newResponse = ratingService.getLatestRatings(-1);
+        List<RatingVm> newResponse = ratingService.getLatestRatings(-1);
         assertEquals(0, newResponse.size());
     }
 
     @Test
     void testGetLatestRatings_WhenCountIs0_returnEmpty() {
-        List<RatingVm>  newResponse = ratingService.getLatestRatings(0);
+        List<RatingVm> newResponse = ratingService.getLatestRatings(0);
         assertEquals(0, newResponse.size());
     }
 
     @Test
     void testGetLatestRatings_WhenProductsEmpty_returnEmpty() {
         ratingRepository.deleteAll();
-        List<RatingVm>  newResponse = ratingService.getLatestRatings(5);
+        List<RatingVm> newResponse = ratingService.getLatestRatings(5);
         assertEquals(0, newResponse.size());
     }
 }

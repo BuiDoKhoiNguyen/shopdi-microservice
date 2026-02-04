@@ -3,8 +3,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yas</groupId>
-        <artifactId>yas</artifactId>
+        <groupId>com.shopdi</groupId>
+        <artifactId>shopdi</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -13,7 +13,7 @@
     <name>backoffice-bff</name>
     <description>Backend for backoffice</description>
     <properties>
-        <sonar.projectKey>nashtech-garage_yas-backoffice-bff</sonar.projectKey>
+        <sonar.projectKey>nashtech-garage_shopdi-backoffice-bff</sonar.projectKey>
     </properties>
     <dependencies>
         <dependency>

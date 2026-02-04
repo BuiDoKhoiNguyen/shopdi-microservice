@@ -1,8 +1,9 @@
-package com.yas.recommendation.controller;
+package com.shopdi.recommendation.controller;
 
-import com.yas.recommendation.vector.common.query.VectorQuery;
-import com.yas.recommendation.vector.product.document.ProductDocument;
-import com.yas.recommendation.viewmodel.RelatedProductVm;
+import com.shopdi.recommendation.controller.EmbeddingQueryController;
+import com.shopdi.recommendation.vector.common.query.VectorQuery;
+import com.shopdi.recommendation.vector.product.document.ProductDocument;
+import com.shopdi.recommendation.viewmodel.RelatedProductVm;
 import java.util.Arrays;
 import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
@@ -50,8 +51,8 @@ class EmbeddingQueryControllerTest {
     void shouldReturnSimilarProducts_whenValidProductIdProvided() throws Exception {
         // Perform a GET request to /embedding/product/{id}/similarity
         mockMvc.perform(get("/embedding/product/1/similarity"))
-                .andExpect(status().isOk())  // Expect HTTP 200 OK status
-                .andExpect(jsonPath("$", hasSize(2)))  // Expect 2 items in the JSON array
+                .andExpect(status().isOk()) // Expect HTTP 200 OK status
+                .andExpect(jsonPath("$", hasSize(2))) // Expect 2 items in the JSON array
                 .andExpect(jsonPath("$[0].name", is("Mock Product 1")))
                 .andExpect(jsonPath("$[1].name", is("Mock Product 2")));
     }
@@ -63,7 +64,7 @@ class EmbeddingQueryControllerTest {
 
         // Perform a GET request to /embedding/product/{id}/similarity
         mockMvc.perform(get("/embedding/product/2/similarity"))
-                .andExpect(status().isOk())  // Expect HTTP 200 OK status
-                .andExpect(jsonPath("$", hasSize(0)));  // Expect empty JSON array
+                .andExpect(status().isOk()) // Expect HTTP 200 OK status
+                .andExpect(jsonPath("$", hasSize(0))); // Expect empty JSON array
     }
 }

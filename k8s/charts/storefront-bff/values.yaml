@@ -1,6 +1,6 @@
 backend:
   image:
-    repository: ghcr.io/nashtech-garage/yas-storefront-bff
+    repository: ghcr.io/nashtech-garage/shopdi-storefront-bff
     tag: latest
 
   nameOverride: storefront-bff
@@ -8,11 +8,11 @@ backend:
 
   deployment:
     annotations:
-      configmap.reloader.stakater.com/reload: "yas-gateway-routes-config-configmap,storefront-bff-extra-configmap"
+      configmap.reloader.stakater.com/reload: "shopdi-gateway-routes-config-configmap,storefront-bff-extra-configmap"
 
   ingress:
     enabled: true
-    host: storefront.yas.local.com
+    host: storefront.shopdi.local.com
     path: /
 
   extraEnvs:
@@ -22,21 +22,21 @@ backend:
       value: http://storefront-ui:3000
   extraEnvFroms:
     - secretRef:
-        name: yas-keycloak-credentials-secret
+        name: shopdi-keycloak-credentials-secret
     - secretRef:
-        name: yas-redis-credentials-secret
+        name: shopdi-redis-credentials-secret
   extraVolumes:
-    - name: yas-gateway-routes-config
+    - name: shopdi-gateway-routes-config
       configMap:
-        name: yas-gateway-routes-config-configmap
+        name: shopdi-gateway-routes-config-configmap
     - name: storefront-bff-extra-config
       configMap:
         name: storefront-bff-extra-configmap
   extraVolumeMounts:
-    - name: yas-gateway-routes-config
-      mountPath: /opt/yas/gateway-routes-config
+    - name: shopdi-gateway-routes-config
+      mountPath: /opt/shopdi/gateway-routes-config
     - name: storefront-bff-extra-config
-      mountPath: /opt/yas/extra-config
+      mountPath: /opt/shopdi/extra-config
   extraApplicationConfigPaths:
-    - /opt/yas/gateway-routes-config/gateway-routes-config.yaml
-    - /opt/yas/extra-config/storefront-bff-extra-config.yaml
+    - /opt/shopdi/gateway-routes-config/gateway-routes-config.yaml
+    - /opt/shopdi/extra-config/storefront-bff-extra-config.yaml

@@ -4,7 +4,7 @@ zookeeper:
   replicas: 1
   storeSize: 5Gi
 postgresql:
-  username: yasadminuser
+  username: shopdiadminuser
   password: admin
 debeziumConnect:
   image: ghcr.io/nashtech-garage/debezium-connect-postgresql:latest

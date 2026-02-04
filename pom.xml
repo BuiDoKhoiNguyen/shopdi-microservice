@@ -8,11 +8,11 @@
         <version>3.3.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.yas</groupId>
-    <artifactId>yas</artifactId>
+    <groupId>com.shopdi</groupId>
+    <artifactId>shopdi</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <name>yas</name>
+    <name>shopdi</name>
 
     <modules>
         <module>common-library</module>
@@ -42,15 +42,15 @@
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <yas.version>1.0-SNAPSHOT</yas.version>
+        <shopdi.version>1.0-SNAPSHOT</shopdi.version>
         <revision>1.0-SNAPSHOT</revision>
 
         <sonar.organization>nashtech-garage</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>nashtech-garage_yas-yas-parent</sonar.projectKey>
+        <sonar.projectKey>nashtech-garage_shopdi-shopdi-parent</sonar.projectKey>
         <springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
         <org.mapstruct.version>	1.6.2</org.mapstruct.version>
-        <org.lombok.version>1.18.34</org.lombok.version>
+        <org.lombok.version>1.18.42</org.lombok.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <logstash-logback-encoder.version>8.0</logstash-logback-encoder.version>
         <opentelemetry-logback.vesion>2.9.0-alpha</opentelemetry-logback.vesion>
@@ -244,7 +244,7 @@
                             <path>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
+                                <version>${org.lombok.version}</version>
                             </path>
                             <path>
                                 <groupId>org.projectlombok</groupId>
@@ -318,10 +318,10 @@
                     </executions>
                     <configuration>
                         <excludes>
-                            <exclude>com/yas/**/*Application.class</exclude>
-                            <exclude>com/yas/**/config/**</exclude>
-                            <exclude>com/yas/**/exception/**</exclude>
-                            <exclude>com/yas/**/constants/**</exclude>
+                            <exclude>com/shopdi/**/*Application.class</exclude>
+                            <exclude>com/shopdi/**/config/**</exclude>
+                            <exclude>com/shopdi/**/exception/**</exclude>
+                            <exclude>com/shopdi/**/constants/**</exclude>
                         </excludes>
                     </configuration>
                 </plugin>

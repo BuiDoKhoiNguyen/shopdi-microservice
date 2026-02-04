@@ -1,8 +1,8 @@
-hostname: grafana.yas.local.com
+hostname: grafana.shopdi.local.com
 grafana:
   username: admin
   password: admin
 postgresql:
   url: postgresql.postgres:5432
-  username: yasadminuser
+  username: shopdiadminuser
   password: admin

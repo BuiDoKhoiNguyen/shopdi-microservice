@@ -1,7 +1,7 @@
 apiVersion: k8s.keycloak.org/v2alpha1
 kind: KeycloakRealmImport
 metadata:
-  name: yas-realm-kc
+  name: shopdi-realm-kc
 spec:
   keycloakCRName: keycloak
   realm:
@@ -72,7 +72,7 @@ spec:
           containerId: Yas
           attributes: { }
         - id: f2da71cd-654f-4beb-8ec8-fa78d6fc1219
-          name: default-roles-yas
+          name: default-roles-shopdi
           description: ${role_default-roles}
           composite: true
           composites:
@@ -292,7 +292,7 @@ spec:
     groups: [ ]
     defaultRole:
       id: f2da71cd-654f-4beb-8ec8-fa78d6fc1219
-      name: default-roles-yas
+      name: default-roles-shopdi
       description: ${role_default-roles}
       composite: true
       clientRole: false
@@ -352,7 +352,7 @@ spec:
         disableableCredentialTypes: [ ]
         requiredActions: [ ]
         realmRoles:
-          - default-roles-yas
+          - default-roles-shopdi
           - ADMIN
         notBefore: 0
         groups: [ ]
@@ -366,7 +366,7 @@ spec:
         disableableCredentialTypes: [ ]
         requiredActions: [ ]
         realmRoles:
-          - default-roles-yas
+          - default-roles-shopdi
         clientRoles:
           realm-management:
             - view-users
@@ -386,7 +386,7 @@ spec:
         disableableCredentialTypes: [ ]
         requiredActions: [ ]
         realmRoles:
-          - default-roles-yas
+          - default-roles-shopdi
         clientRoles:
           storefront-bff:
             - uma_protection
@@ -933,7 +933,7 @@ spec:
         alwaysDisplayInConsole: false
         clientAuthenticatorType: client-secret
         redirectUris:
-          - http://api.yas.local.com/*
+          - http://api.shopdi.local.com/*
           - http://localhost:8080/*
           - http://localhost:8081/*
           - http://localhost:8083/*
@@ -947,7 +947,7 @@ spec:
           - http://localhost:8092/*
           - http://localhost:8093/*
         webOrigins:
-          - http://api.yas.local.com
+          - http://api.shopdi.local.com
           - http://localhost:8080
           - http://localhost:8081
           - http://localhost:8083
@@ -1418,7 +1418,7 @@ spec:
       xXSSProtection: 1; mode=block
       strictTransportSecurity: max-age=31536000; includeSubDomains
     smtpServer: { }
-    loginTheme: yas
+    loginTheme: shopdi
     eventsEnabled: false
     eventsListeners:
       - jboss-logging

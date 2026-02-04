@@ -10,7 +10,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - yas-network
+      - shopdi-network
   identity:
     image: quay.io/keycloak/keycloak:26.0.2
     command: 'start-dev --import-realm'
@@ -24,12 +24,12 @@ services:
       KC_HTTP_PORT: 80
     volumes:
       - ./identity/realm-export.json:/opt/keycloak/data/import/realm-export.json
-      - ./identity/themes/yas/theme:/opt/keycloak/themes
+      - ./identity/themes/shopdi/theme:/opt/keycloak/themes
     networks:
-      - yas-network
+      - shopdi-network
   backoffice:
     build: ./backoffice-bff
-    image: ghcr.io/nashtech-garage/yas-backoffice-bff:latest
+    image: ghcr.io/nashtech-garage/shopdi-backoffice-bff:latest
     entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
     environment:
     - SPRING_PROFILES_ACTIVE=prod
@@ -52,27 +52,27 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   backoffice-nextjs:
-    image: ghcr.io/nashtech-garage/yas-backoffice:latest
+    image: ghcr.io/nashtech-garage/shopdi-backoffice:latest
     networks:
-    - yas-network
+    - shopdi-network
   storefront:
     build: ./storefront-bff
-    image: ghcr.io/nashtech-garage/yas-storefront-bff:latest
+    image: ghcr.io/nashtech-garage/shopdi-storefront-bff:latest
     entrypoint: ["./wait-for-it.sh", "identity:80", "--timeout=300", "--", "java", "-jar", "/app.jar"]
     environment:
     - SPRING_PROFILES_ACTIVE=prod
-    - YAS_SERVICES_CUSTOMER
-    - YAS_SERVICES_CART
-    - YAS_SERVICES_RATING
-    - YAS_SERVICES_ORDER
-    - YAS_SERVICES_LOCATION
-    - YAS_SERVICES_INVENTORY
-    - YAS_SERVICES_TAX
-    - YAS_SERVICES_PROMOTION
-    - YAS_SERVICES_PAYMENT
-    - YAS_SERVICES_SAMPLE_DATA
+    - SHOPDI_SERVICES_CUSTOMER
+    - SHOPDI_SERVICES_CART
+    - SHOPDI_SERVICES_RATING
+    - SHOPDI_SERVICES_ORDER
+    - SHOPDI_SERVICES_LOCATION
+    - SHOPDI_SERVICES_INVENTORY
+    - SHOPDI_SERVICES_TAX
+    - SHOPDI_SERVICES_PROMOTION
+    - SHOPDI_SERVICES_PAYMENT
+    - SHOPDI_SERVICES_SAMPLE_DATA
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -92,18 +92,18 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config      
     networks:
-      - yas-network
+      - shopdi-network
   storefront-nextjs:
-    image: ghcr.io/nashtech-garage/yas-storefront:latest
+    image: ghcr.io/nashtech-garage/shopdi-storefront:latest
     networks:
-      - yas-network
+      - shopdi-network
   media:
     build: ./media  
-    image: ghcr.io/nashtech-garage/yas-media:latest
+    image: ghcr.io/nashtech-garage/shopdi-media:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/media
     - SERVER_SERVLET_CONTEXT_PATH=/media
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/media
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/media
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -124,14 +124,14 @@ services:
     - ./deployment/app-config:/app-config
     - ./sampledata/images:/images
     networks:
-      - yas-network
+      - shopdi-network
   product:
     build: ./product
-    image: ghcr.io/nashtech-garage/yas-product:latest
+    image: ghcr.io/nashtech-garage/shopdi-product:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/product
     - SERVER_SERVLET_CONTEXT_PATH=/product
-    - YAS_SERVICES_MEDIA
+    - SHOPDI_SERVICES_MEDIA
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS    
@@ -151,14 +151,14 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   customer:
     build: ./customer  
-    image: ghcr.io/nashtech-garage/yas-customer:latest
+    image: ghcr.io/nashtech-garage/shopdi-customer:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/customer
     - SERVER_SERVLET_CONTEXT_PATH=/customer
-    - YAS_SERVICES_LOCATION
+    - SHOPDI_SERVICES_LOCATION
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS    
@@ -178,15 +178,15 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   cart:
     build: ./cart
-    image: ghcr.io/nashtech-garage/yas-cart:latest
+    image: ghcr.io/nashtech-garage/shopdi-cart:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/cart
     - SERVER_SERVLET_CONTEXT_PATH=/cart
-    - YAS_SERVICES_MEDIA
-    - YAS_SERVICES_PRODUCT
+    - SHOPDI_SERVICES_MEDIA
+    - SHOPDI_SERVICES_PRODUCT
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -206,17 +206,17 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   rating:
     build: ./rating  
-    image: ghcr.io/nashtech-garage/yas-rating:latest
+    image: ghcr.io/nashtech-garage/shopdi-rating:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/rating
     - SERVER_SERVLET_CONTEXT_PATH=/rating
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/rating
-    - YAS_SERVICES_PRODUCT
-    - YAS_SERVICES_CUSTOMER
-    - YAS_SERVICES_ORDER
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/rating
+    - SHOPDI_SERVICES_PRODUCT
+    - SHOPDI_SERVICES_CUSTOMER
+    - SHOPDI_SERVICES_ORDER
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -236,21 +236,21 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   order:
     build: ./order
-    image: ghcr.io/nashtech-garage/yas-order:latest
+    image: ghcr.io/nashtech-garage/shopdi-order:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/order
     - SERVER_SERVLET_CONTEXT_PATH=/order
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS        
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/order
-    - YAS_SERVICES_CART
-    - YAS_SERVICES_CUSTOMER
-    - YAS_SERVICES_PRODUCT
-    - YAS_SERVICES_TAX
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/order
+    - SHOPDI_SERVICES_CART
+    - SHOPDI_SERVICES_CUSTOMER
+    - SHOPDI_SERVICES_PRODUCT
+    - SHOPDI_SERVICES_TAX
     - OTEL_EXPORTER_OTLP_ENDPOINT
     - OTEL_EXPORTER_OTLP_PROTOCOL
     - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
@@ -263,22 +263,22 @@ services:
     - OTEL_JAVAAGENT_ENABLED
     - OTEL_JAVAAGENT_DEBUG
     - OTEL_INSTRUMENTATION_LOGBACK-MDC_ADD-BAGGAGE
-    - YAS_CURRENCY_UNIT
-    - YAS_PRICE_INCLUDES_TAX
+    - SHOPDI_CURRENCY_UNIT
+    - SHOPDI_PRICE_INCLUDES_TAX
     volumes:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   payment:
     build: ./payment
-    image: ghcr.io/nashtech-garage/yas-payment:latest
+    image: ghcr.io/nashtech-garage/shopdi-payment:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/payment
     - SERVER_SERVLET_CONTEXT_PATH=/payment
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/payment
-    - YAS_SERVICES_ORDER
-    - YAS_SERVICES_MEDIA
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/payment
+    - SHOPDI_SERVICES_ORDER
+    - SHOPDI_SERVICES_MEDIA
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -294,20 +294,20 @@ services:
     - OTEL_JAVAAGENT_LOGGING
     - OTEL_JAVAAGENT_ENABLED
     - OTEL_JAVAAGENT_DEBUG
-    - YAS_CURRENCY_UNIT
-    - YAS_PRICE_INCLUDES_TAX
+    - SHOPDI_CURRENCY_UNIT
+    - SHOPDI_PRICE_INCLUDES_TAX
     volumes:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   location:
     build: ./location
-    image: ghcr.io/nashtech-garage/yas-location:latest
+    image: ghcr.io/nashtech-garage/shopdi-location:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/location
     - SERVER_SERVLET_CONTEXT_PATH=/location
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/location
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/location
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -327,16 +327,16 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   inventory:
     build: ./inventory
-    image: ghcr.io/nashtech-garage/yas-inventory:latest
+    image: ghcr.io/nashtech-garage/shopdi-inventory:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory
     - SERVER_SERVLET_CONTEXT_PATH=/inventory
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/inventory
-    - YAS_SERVICES_PRODUCT
-    - YAS_SERVICES_LOCATION
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/inventory
+    - SHOPDI_SERVICES_PRODUCT
+    - SHOPDI_SERVICES_LOCATION
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -356,15 +356,15 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   promotion:
     build: ./promotion  
-    image: ghcr.io/nashtech-garage/yas-promotion:latest
+    image: ghcr.io/nashtech-garage/shopdi-promotion:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/promotion
     - SERVER_SERVLET_CONTEXT_PATH=/promotion
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/promotion
-    - YAS_SERVICES_PRODUCT
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/promotion
+    - SHOPDI_SERVICES_PRODUCT
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -384,15 +384,15 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config      
     networks:
-      - yas-network
+      - shopdi-network
   tax:
     build: ./tax    
-    image: ghcr.io/nashtech-garage/yas-tax:latest
+    image: ghcr.io/nashtech-garage/shopdi-tax:latest
     environment:
     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/tax
     - SERVER_SERVLET_CONTEXT_PATH=/tax
-    - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/tax
-    - YAS_SERVICES_LOCATION
+    - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/tax
+    - SHOPDI_SERVICES_LOCATION
     - SERVER_PORT
     - LOGGING_CONFIG
     - JAVA_TOOL_OPTIONS
@@ -412,16 +412,16 @@ services:
     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
     - ./deployment/app-config:/app-config
     networks:
-    - yas-network
+    - shopdi-network
   sampledata:
     build: ./sampledata
-    image: ghcr.io/nashtech-garage/yas-sampledata:latest
+    image: ghcr.io/nashtech-garage/shopdi-sampledata:latest
     environment:
       - SPRING_DATASOURCE_PRODUCT_URL=jdbc:postgresql://postgres:5432/product
       - SPRING_DATASOURCE_MEDIA_URL=jdbc:postgresql://postgres:5432/media
       - SERVER_SERVLET_CONTEXT_PATH=/sampledata
-      - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/sampledata
-      - YAS_SERVICES_SAMPLE_DATA
+      - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/sampledata
+      - SHOPDI_SERVICES_SAMPLE_DATA
       - SERVER_PORT
       - LOGGING_CONFIG
       - JAVA_TOOL_OPTIONS
@@ -441,15 +441,15 @@ services:
       - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
       - ./deployment/app-config:/app-config
     networks:
-      - yas-network
+      - shopdi-network
   # webhook:
   #   build: ./webhook
-  #   image: ghcr.io/nashtech-garage/yas-webhook:latest
+  #   image: ghcr.io/nashtech-garage/shopdi-webhook:latest
   #   environment:
   #     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/webhook
   #     - SERVER_SERVLET_CONTEXT_PATH=/webhook
-  #     - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/webhook
-  #     - YAS_SERVICES_LOCATION
+  #     - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/webhook
+  #     - SHOPDI_SERVICES_LOCATION
   #     - SERVER_PORT
   #     - LOGGING_CONFIG
   #     - JAVA_TOOL_OPTIONS
@@ -469,17 +469,17 @@ services:
   #     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
   #     - ./deployment/app-config:/app-config
   #   networks:
-  #     - yas-network
+  #     - shopdi-network
   # recommendation:
   #   build: ./recommendation
-  #   image: ghcr.io/nashtech-garage/yas-recommendation:latest
+  #   image: ghcr.io/nashtech-garage/shopdi-recommendation:latest
   #   ports:
   #     - '9791:9791'
   #   environment:
   #     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/recommendation
   #     - SERVER_SERVLET_CONTEXT_PATH=/recommendation
-  #     - YAS_PUBLIC_URL=${YAS_PUBLIC_API_URL}/recommendation
-  #     - YAS_SERVICES_PRODUCT
+  #     - SHOPDI_PUBLIC_URL=${SHOPDI_PUBLIC_API_URL}/recommendation
+  #     - SHOPDI_SERVICES_PRODUCT
   #     - SERVER_PORT
   #     - LOGGING_CONFIG
   #     - JAVA_TOOL_OPTIONS
@@ -503,7 +503,7 @@ services:
   #     - ./docker/libs/opentelemetry-javaagent.jar:/opentelemetry-javaagent.jar
   #     - ./deployment/app-config:/app-config
   #   networks:
-  #     - yas-network
+  #     - shopdi-network
   swagger-ui:
     image: swaggerapi/swagger-ui:v5.17.14
     environment:
@@ -512,7 +512,7 @@ services:
     - OAUTH_CLIENT_ID=swagger-ui
     - OAUTH_USE_PKCE=true
     networks:
-      - yas-network
+      - shopdi-network
   postgres:
     image: debezium/postgres:16-alpine
     build: ./docker/postgres
@@ -528,16 +528,16 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
     networks:
-      - yas-network
+      - shopdi-network
   pgadmin:
     image: dpage/pgadmin4:2024-10-19-2
     volumes:
       - pgadmin:/var/lib/pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@yas.com
+      PGADMIN_DEFAULT_EMAIL: admin@shopdi.com
       PGADMIN_DEFAULT_PASSWORD: admin
     networks:
-      - yas-network
+      - shopdi-network
   zookeeper:
     image: debezium/zookeeper:2.7.3.Final
     restart: always
@@ -546,7 +546,7 @@ services:
       - 2888:2888
       - 3888:3888
     networks:
-      - yas-network
+      - shopdi-network
   kafka:
     image: confluentinc/cp-kafka:7.7.1
     hostname: ${KAFKA_SERVICE_HOST}
@@ -563,7 +563,7 @@ services:
       - KAFKA_INTER_BROKER_LISTENER_NAME
       - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
     networks:
-      - yas-network
+      - shopdi-network
   kafka-connect:
     image: debezium/connect:2.7.3.Final
     restart: always
@@ -578,7 +578,7 @@ services:
       - CONFIG_STORAGE_TOPIC=kafka_connect_configs
       - OFFSET_STORAGE_TOPIC=kafka_connect_offsets
     networks:
-      - yas-network
+      - shopdi-network
   kafka-ui:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
@@ -591,7 +591,7 @@ services:
       - kafka
       - kafka-connect
     networks:
-      - yas-network
+      - shopdi-network
   redis:
     image: redis:7.4.1-alpine
     restart: always
@@ -603,12 +603,12 @@ services:
     volumes:
       - redis:/data
     networks:
-      - yas-network
+      - shopdi-network
 
 networks:
-  yas-network:
+  shopdi-network:
     driver: bridge
-    name: yas-network
+    name: shopdi-network
 
 volumes:
   postgres:

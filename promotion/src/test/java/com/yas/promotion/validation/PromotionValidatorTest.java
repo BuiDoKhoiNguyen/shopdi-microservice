@@ -1,13 +1,14 @@
-package com.yas.promotion.validation;
+package com.shopdi.promotion.validation;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import com.yas.promotion.model.enumeration.ApplyTo;
-import com.yas.promotion.model.enumeration.DiscountType;
-import com.yas.promotion.model.enumeration.UsageType;
-import com.yas.promotion.viewmodel.PromotionDto;
+import com.shopdi.promotion.model.enumeration.ApplyTo;
+import com.shopdi.promotion.model.enumeration.DiscountType;
+import com.shopdi.promotion.model.enumeration.UsageType;
+import com.shopdi.promotion.validation.PromotionValidator;
+import com.shopdi.promotion.viewmodel.PromotionDto;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;

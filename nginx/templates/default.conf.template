@@ -1,5 +1,5 @@
 server {
-  server_name api.yas.local;
+  server_name api.shopdi.local;
 
   # Docker DNS
   resolver 127.0.0.11;
@@ -73,7 +73,7 @@ server {
 }
 
 server {
-  server_name pgadmin.yas.local;
+  server_name pgadmin.shopdi.local;
   location / {
     proxy_pass http://pgadmin;
   }

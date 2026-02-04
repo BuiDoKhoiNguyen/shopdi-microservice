@@ -1,13 +1,15 @@
-package com.yas.webhook.service;
+package com.shopdi.webhook.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import com.yas.webhook.model.Event;
-import com.yas.webhook.model.mapper.EventMapper;
-import com.yas.webhook.model.viewmodel.webhook.EventVm;
-import com.yas.webhook.repository.EventRepository;
+import com.shopdi.webhook.model.Event;
+import com.shopdi.webhook.model.mapper.EventMapper;
+import com.shopdi.webhook.model.viewmodel.webhook.EventVm;
+import com.shopdi.webhook.repository.EventRepository;
+import com.shopdi.webhook.service.EventService;
+
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +35,7 @@ class EventServiceTest {
         EventVm eventVm = EventVm.builder().build();
 
         when(eventRepository.findAll(Sort.by(Sort.Direction.DESC, "id")))
-            .thenReturn(List.of(event));
+                .thenReturn(List.of(event));
         when(eventMapper.toEventVm(event)).thenReturn(eventVm);
 
         List<EventVm> eventVms = eventService.findAllEvents();
